@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
         "git",
@@ -17,6 +18,9 @@ local plugins = {
         "folke/tokyonight.nvim",
     },
     {
+        'Mofiqul/dracula.nvim'
+    },
+    {
         "nathom/filetype.nvim"
     },
     -- Debugging
@@ -32,6 +36,10 @@ local plugins = {
     -- Copilot
     {
         "github/copilot.vim",
+        lazy = false,
+        config = function()
+            vim.g.copilot_assume_mapped = true
+        end
     },
     { "ofseed/lualine-copilot" },
     {
@@ -162,7 +170,8 @@ local plugins = {
                     additional_vim_regex_highlighting = false,
                 },
                 indent = {
-                    enable = true
+                    enable = true,
+                    disable = { "dart" }
                 }
             }
         end,
@@ -201,9 +210,6 @@ local plugins = {
             'nvim-lua/plenary.nvim',
             'stevearc/dressing.nvim', -- optional for vim.ui.select
         },
-        config = function()
-            require("flutter-tools").setup {}
-        end,
     },
     {
         "Nash0x7E2/awesome-flutter-snippets"
@@ -316,9 +322,13 @@ local plugins = {
             require('modicator').setup()
         end,
     },
-    -- {
-    --     'dart-lang/dart-vim-plugin'
-    -- }
+    {
+        'dart-lang/dart-vim-plugin',
+    },
+    -- Git Blame Messages
+    {
+        'rhysd/git-messenger.vim'
+    }
 }
 
 

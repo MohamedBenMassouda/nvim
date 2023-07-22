@@ -10,6 +10,12 @@ if not luasnip_status then
     return
 end
 
+-- luasnip.config.set_config {
+--     history = true,
+--     updateevents = "TextChanged,TextChanged1",
+--     enable_autosnippets = true
+-- }
+
 vim.keymap.set({ "i", "s" }, "<Tab>", function() luasnip.jump(1) end, { desc = "Jump to Next Snippet", silent = true })
 vim.keymap.set({ "i", "s" }, "<S-Tab>", function() luasnip.jump(-1) end, { desc = "Jump to Prev Snippet", silent = true })
 
