@@ -20,6 +20,17 @@ local plugins = {
     {
         'Mofiqul/dracula.nvim'
     },
+    -- Copy to clipboard
+    {
+        'ojroques/nvim-osc52',
+        config = function()
+            require('osc52').setup {
+                max_length = 0,     -- Maximum length of selection (0 for no limit)
+                silent     = false, -- Disable message on successful copy
+                trim       = false, -- Trim surrounding whitespaces before copy
+            }
+        end
+    },
     {
         "nathom/filetype.nvim"
     },
@@ -124,11 +135,22 @@ local plugins = {
         -- Status Line
         "nvim-lualine/lualine.nvim",
         config = function()
-            require("lualine").setup()
+            require("lualine").setup {
+                options = {
+                    theme = "tokyonight",
+                    icons_enabled = true,
+                    globalstatus = true,
+                },
+                sections = {
+                    lualine_x = {
+                        "copilot",
+                        "filetype",
+                        "encoding",
+                        "fileformat",
+                    }
+                }
+            }
         end,
-        opt = function(_, opts)
-            table.insert(opts, sections.lualine_x, "copilot")
-        end
     },
     {
         'nvim-telescope/telescope.nvim',
@@ -200,7 +222,27 @@ local plugins = {
             { 'rafamadriz/friendly-snippets' },
 
             -- LSP Formating
-            { "lukas-reineke/lsp-format.nvim" }
+            { "lukas-reineke/lsp-format.nvim" },
+
+            -- Lsp Diagnostics
+            { 'folke/trouble.nvim' },
+
+            -- Lsp Signature
+            { 'ray-x/lsp_signature.nvim' },
+
+            -- Lsp Code Actions
+            {
+                'kosayoda/nvim-lightbulb',
+                opts = {}
+            },
+
+            -- Lsp kind
+            {
+                'onsails/lspkind-nvim',
+                config = function()
+                    require('lspkind').init()
+                end
+            },
         }
     },
     {

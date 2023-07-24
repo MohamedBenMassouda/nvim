@@ -28,7 +28,6 @@ opt.backspace = "indent,eol,start"
 
 -- Clipboard
 opt.clipboard:append("unnamedplus")
-vim.api.nvim_set_option("clipboard", "unnamedplus")
 
 -- Split Windows
 opt.splitright = true

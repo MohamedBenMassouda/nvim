@@ -47,3 +47,20 @@ keymap.set("n", "<leader>sr", ":%s/", { desc = "Search and Replace In all the Fi
 
 -- Git Blame Messages Keymaps
 keymap.set("n", "<leader>g", "<CMD>GitMessenger<CR>", { desc = "Git Blame in Floating Window" })
+
+
+-- Clipboard Keymaps
+vim.keymap.set('n', '<leader>c', require('osc52').copy_operator, { expr = true })
+vim.keymap.set('n', '<leader>cc', '<leader>c_', { remap = true })
+vim.keymap.set('v', '<leader>c', require('osc52').copy_visual)
+
+
+-- Trouble
+-- Lua
+vim.keymap.set("n", "<leader>xx", function() require("trouble").open() end, { desc = "Open Trouble" })
+vim.keymap.set("n", "<leader>xw", function() require("trouble").open("workspace_diagnostics") end,
+    { desc = "Open Trouble Workspace Diagnostics" })
+vim.keymap.set("n", "<leader>xd", function() require("trouble").open("document_diagnostics") end,
+    { desc = "Open Trouble Document Diagnostics" })
+vim.keymap.set("n", "<leader>xl", function() require("trouble").open("quickfix") end, { desc = "Open Trouble Quickfix" })
+vim.keymap.set("n", "<leader>xq", function() require("trouble").open("loclist") end, { desc = "Open Trouble Loclist" })

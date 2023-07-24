@@ -1,4 +1,4 @@
-local lsp = require("lsp-zero")
+local lsp        = require("lsp-zero")
 local lsp_config = require("lspconfig")
 local lsp_format = require("lsp-format")
 
@@ -21,12 +21,13 @@ lsp.setup_nvim_cmp({
 
 lsp.set_preferences({
     suggest_lsp_servers = true,
-    sign_icons = {
-        error = 'E',
-        warn = 'W',
-        hint = 'H',
-        info = 'I'
-    }
+})
+
+lsp.set_sign_icons({
+    error = '✘',
+    warn = '▲',
+    hint = '⚑',
+    info = '»'
 })
 
 lsp.on_attach(function(client, bufnr)
