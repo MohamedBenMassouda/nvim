@@ -5,6 +5,20 @@ local lsp_format = require("lsp-format")
 lsp_format.setup {}
 lsp_config.lua_ls.setup { on_attach = lsp_format.on_attach }
 
+require("neodev").setup({
+  library = { plugins = { "nvim-dap-ui" }, types = true },
+})
+
+lsp_config.lua_ls.setup {
+    settings = {
+        Lua = {
+            completion = {
+                callSnippet = "Replace"
+            }
+        }
+    }
+}
+
 lsp.preset("recommended")
 
 lsp.ensure_installed({
@@ -52,7 +66,9 @@ vim.diagnostic.config({
     virtual_text = true
 })
 
-require("lspconfig")["dartls"].setup({
+local lspconfig = require('lspconfig')
+
+lspconfig["dartls"].setup({
     on_attach = on_attach,
     capabilities = capabilities,
 })

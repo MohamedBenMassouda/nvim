@@ -24,16 +24,27 @@ require("flutter-tools").setup {
         }
     },
     debugger = {             -- integrate with nvim dap + install dart code debugger
-        enabled = true,
+        enabled = false,
         run_via_dap = false, -- use dap instead of a plenary job to run flutter apps
         -- if empty dap will not stop on any exceptions, otherwise it will stop on those specified
         -- see |:help dap.set_exception_breakpoints()| for more info
-        exception_breakpoints = {}
-        -- register_configurations = function(paths)
-        --   require("dap").configurations.dart = {
-        --     <put here config that you would find in .vscode/launch.json>
-        --   }
-        -- end,
+        register_configurations = function(_)
+            require("dap").configurations.dart = {
+                {
+                    -- The first three options are required by nvim-dap
+                    type = "dart",
+                    request = "launch",
+                    name = "Flutter",
+                    -- If you have a flutter project, use flutterRun as the program. Otherwise, use
+                    -- generic. Users with a different project structure can adjust as necessary.
+                    program = require("flutter-tools.utils").flutter_path(),
+                    cwd = vim.fn.getcwd(),
+                    -- flutterRun supports additional options you may pass in
+                    args = { "--flavor", "dev" },
+                },
+            }
+            require("dap.ext.vscode").load_launchjs()
+        end,
     },
     fvm = false, -- takes priority over path, uses <workspace>/.fvm/flutter_sdk if enabled
     widget_guides = {

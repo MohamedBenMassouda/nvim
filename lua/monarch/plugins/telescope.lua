@@ -6,6 +6,15 @@ set("n", "<leader>th", builtin.colorscheme, { desc = "ColorScheme Preview" })
 set("n", "<leader>h", builtin.help_tags, { desc = "Help Tag" })
 
 require("telescope").setup {
+    file_ignore_patterns = { "node_modules", ".git" },
+    defaults = {
+        sorting_strategy = "ascending",
+        layout_config = {
+            horizontal = {
+                prompt_position = "top",
+            }
+        }
+    },
     extensions = {
         live_grep_args = {
             auto_quoting = true,
@@ -19,8 +28,22 @@ require("telescope").setup {
     pickers = {
         colorscheme = {
             enable_preview = true
-        }
-    }
+        },
+        current_buffer_fuzzy_find = {
+            previewer = false,
+            layout_config = {
+                height = 0.5,
+                width = 0.5,
+            }
+        },
+        diagnostics = {
+            previewer = false,
+            layout_config = {
+                height = 0.5,
+                width = 0.5,
+            }
+        },
+  }
 }
 
 require("telescope").load_extension("flutter")
@@ -56,3 +79,7 @@ require 'telescope-lsp-handlers'.setup({
 
 vim.keymap.set('n', '<leader>flr', function() require('telescope.builtin').lsp_references() end,
     { desc = "LSP References", noremap = true, silent = true })
+
+
+require('telescope').load_extension('fzf')
+require('telescope').load_extension('dap')

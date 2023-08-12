@@ -12,15 +12,6 @@ end
 
 local lspkind = require('lspkind')
 
--- luasnip.config.set_config {
---     history = true,
---     updateevents = "TextChanged,TextChanged1",
---     enable_autosnippets = true
--- }
-
-vim.keymap.set({ "i", "s" }, "<Tab>", function() luasnip.jump(1) end, { desc = "Jump to Next Snippet", silent = true })
-vim.keymap.set({ "i", "s" }, "<S-Tab>", function() luasnip.jump(-1) end, { desc = "Jump to Prev Snippet", silent = true })
-
 -- load vs-code like snippets from plugins (e.g. friendly-snippets)
 require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -67,3 +58,11 @@ cmp.event:on(
     'confirm_done',
     cmp_autopairs.on_confirm_done()
 )
+
+luasnip.config.set_config {
+    history = true,
+    enable_autosnippets = true
+}
+
+vim.keymap.set({ "i", "s" }, "<Tab>", function() luasnip.jump(1) end, { desc = "Jump to Next Snippet", silent = true })
+vim.keymap.set({ "i", "s" }, "<S-Tab>", function() luasnip.jump(-1) end, { desc = "Jump to Prev Snippet", silent = true })

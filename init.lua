@@ -17,10 +17,7 @@ local plugins = {
     {
         "folke/tokyonight.nvim",
     },
-    {
-        'Mofiqul/dracula.nvim'
-    },
-    -- Copy to clipboard
+   -- Copy to clipboard
     {
         'ojroques/nvim-osc52',
         config = function()
@@ -31,14 +28,19 @@ local plugins = {
             }
         end
     },
-    {
-        "nathom/filetype.nvim"
-    },
     -- Debugging
     {
         "rcarriga/nvim-dap-ui",
         dependencies = {
-            'mfussenegger/nvim-dap'
+            'mfussenegger/nvim-dap',
+            'theHamsta/nvim-dap-virtual-text',
+            'jay-babu/mason-nvim-dap.nvim',
+            'leoluz/nvim-dap-go',
+            'mfussenegger/nvim-dap-python',
+            {
+                'folke/neodev.nvim',
+                opts = {}
+            }
         }
     },
     {
@@ -87,6 +89,9 @@ local plugins = {
         opts = {}
     },
     {
+        'jiangmiao/auto-pairs'
+    },
+    {
         "kylechui/nvim-surround",
         version = "*", -- Use for stability; omit to use `main` branch for the latest features
         event = "VeryLazy",
@@ -121,12 +126,40 @@ local plugins = {
                 sort_by = "case_sensitive",
                 view = {
                     width = 30,
+                    float = {
+                        enable = true,
+                        quit_on_focus_loss = true,
+                        open_win_config ={
+                            relative = "editor",
+                            border = "rounded",
+                            width = 30,
+                            height = 30,
+                            row = 1,
+                            col = 1,
+                        }
+                    },
                 },
                 renderer = {
                     group_empty = true,
                 },
                 filters = {
                     dotfiles = true,
+                },
+                diagnostics = {
+                    enable = true,
+                    show_on_dirs = true,
+                    show_on_open_dirs = false,
+                    debounce_delay = 50,
+                    severity = {
+                        min = vim.diagnostic.severity.HINT,
+                        max = vim.diagnostic.severity.ERROR,
+                    },
+                    icons = {
+                        hint = "",
+                        info = "",
+                        warning = "",
+                        error = "",
+                    },
                 },
             })
         end
@@ -155,11 +188,13 @@ local plugins = {
     {
         'nvim-telescope/telescope.nvim',
         dependencies = {
+            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
             'nvim-telescope/telescope-ui-select.nvim',
             'nvim-telescope/telescope-live-grep-args.nvim',
             "nvim-telescope/telescope-file-browser.nvim",
             "nvim-telescope/telescope-project.nvim",
-            "Slotos/telescope-lsp-handlers.nvim"
+            "Slotos/telescope-lsp-handlers.nvim",
+            'nvim-telescope/telescope-dap.nvim',
         },
         config = function()
             require("telescope").setup(opts)
@@ -174,7 +209,7 @@ local plugins = {
             require("nvim-treesitter.install").prefer_git = true
             require 'nvim-treesitter.configs'.setup {
                 -- A list of parser names, or "all" (the five listed parsers should always be installed)
-                ensure_installed = { "javascript", "typescript", "c", "lua", "dart" },
+                ensure_installed = { "javascript", "typescript", "c", "lua", "dart", "python", "tsx" },
 
                 -- Install parsers synchronously (only applied to `ensure_installed`)
                 sync_install = false,
@@ -279,7 +314,7 @@ local plugins = {
                     command_palette = true,       -- position the cmdline and popupmenu together
                     long_message_to_split = true, -- long messages will be sent to a split
                     inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-                    lsp_doc_border = false,       -- add a border to hover docs and signature help
+                    lsp_doc_border = true,       -- add a border to hover docs and signature help
                 },
             })
         end
@@ -370,6 +405,13 @@ local plugins = {
     -- Git Blame Messages
     {
         'rhysd/git-messenger.vim'
+    },
+    {
+        "nvim-pack/nvim-spectre",
+        opts = {}
+    },
+    {
+        "lalitmee/browse.nvim",
     }
 }
 

@@ -1,6 +1,9 @@
 vim.g.mapleader = " "
 local keymap = vim.keymap
 
+keymap.set("v", "J", ":m '>+1<CR>gv=gv'", { desc = "No Highlight" })
+
+
 keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Vim Explorer" })
 keymap.set("n", "<C-s>", "<CMD>w<CR>", { desc = "Save File" })
 keymap.set("n", "<C-q>", "<CMD>q<CR>", { desc = "Quit" })
@@ -64,3 +67,14 @@ vim.keymap.set("n", "<leader>xd", function() require("trouble").open("document_d
     { desc = "Open Trouble Document Diagnostics" })
 vim.keymap.set("n", "<leader>xl", function() require("trouble").open("quickfix") end, { desc = "Open Trouble Quickfix" })
 vim.keymap.set("n", "<leader>xq", function() require("trouble").open("loclist") end, { desc = "Open Trouble Loclist" })
+
+
+-- Debugging
+vim.keymap.set("n", "<leader>b", "<CMD>lua require'dap'.toggle_breakpoint()<CR>", { desc = "Toggle Breakpoint" })
+vim.keymap.set("n", "<leader>dc", "<CMD>lua require'dap'.continue()<CR>", { desc = "Continue" })
+
+
+vim.keymap.set("n", "<C-=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
+vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
+vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
+vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
