@@ -28,6 +28,9 @@ local plugins = {
             }
         end
     },
+    {
+        'nathom/filetype.nvim'
+    },
     -- Debugging
     {
         "rcarriga/nvim-dap-ui",
@@ -113,56 +116,56 @@ local plugins = {
     {
         "nvim-tree/nvim-tree.lua",
         lazy = false,
-        config = function()
-            vim.g.loaded_netrw = 1
-            vim.g.loaded_netrwPlugin = 1
-
-            -- set termguicolors to enable highlight groups
-            vim.opt.termguicolors = true
-
-
-            -- OR setup with some options
-            require("nvim-tree").setup({
-                sort_by = "case_sensitive",
-                view = {
-                    width = 30,
-                    float = {
-                        enable = true,
-                        quit_on_focus_loss = true,
-                        open_win_config ={
-                            relative = "editor",
-                            border = "rounded",
-                            width = 30,
-                            height = 30,
-                            row = 1,
-                            col = 1,
-                        }
-                    },
-                },
-                renderer = {
-                    group_empty = true,
-                },
-                filters = {
-                    dotfiles = true,
-                },
-                diagnostics = {
-                    enable = true,
-                    show_on_dirs = true,
-                    show_on_open_dirs = false,
-                    debounce_delay = 50,
-                    severity = {
-                        min = vim.diagnostic.severity.HINT,
-                        max = vim.diagnostic.severity.ERROR,
-                    },
-                    icons = {
-                        hint = "",
-                        info = "",
-                        warning = "",
-                        error = "",
-                    },
-                },
-            })
-        end
+        -- config = function()
+        --     vim.g.loaded_netrw = 1
+        --     vim.g.loaded_netrwPlugin = 1
+        --
+        --     -- set termguicolors to enable highlight groups
+        --     vim.opt.termguicolors = true
+        --
+        --
+        --     -- OR setup with some options
+        --     require("nvim-tree").setup({
+        --         sort_by = "case_sensitive",
+        --         view = {
+        --             width = 30,
+        --             float = {
+        --                 enable = true,
+        --                 quit_on_focus_loss = true,
+        --                 open_win_config ={
+        --                     relative = "editor",
+        --                     border = "rounded",
+        --                     width = 30,
+        --                     height = 30,
+        --                     row = 1,
+        --                     col = 1,
+        --                 }
+        --             },
+        --         },
+        --         renderer = {
+        --             group_empty = true,
+        --         },
+        --         filters = {
+        --             dotfiles = true,
+        --         },
+        --         diagnostics = {
+        --             enable = true,
+        --             show_on_dirs = true,
+        --             show_on_open_dirs = false,
+        --             debounce_delay = 50,
+        --             severity = {
+        --                 min = vim.diagnostic.severity.HINT,
+        --                 max = vim.diagnostic.severity.ERROR,
+        --             },
+        --             icons = {
+        --                 hint = "",
+        --                 info = "",
+        --                 warning = "",
+        --                 error = "",
+        --             },
+        --         },
+        --     })
+        -- end
     },
     {
         -- Status Line
@@ -412,6 +415,20 @@ local plugins = {
     },
     {
         "lalitmee/browse.nvim",
+    },
+    {
+        "ray-x/go.nvim",
+        dependencies = {  -- optional packages
+            "ray-x/guihua.lua",
+            "neovim/nvim-lspconfig",
+            "nvim-treesitter/nvim-treesitter",
+        },
+        config = function()
+            require("go").setup()
+        end,
+        event = {"CmdlineEnter"},
+        ft = {"go", 'gomod'},
+        build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
     }
 }
 
