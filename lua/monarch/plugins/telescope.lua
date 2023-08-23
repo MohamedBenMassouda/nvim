@@ -6,7 +6,7 @@ set("n", "<leader>th", builtin.colorscheme, { desc = "ColorScheme Preview" })
 set("n", "<leader>h", builtin.help_tags, { desc = "Help Tag" })
 
 require("telescope").setup {
-    file_ignore_patterns = { "node_modules", ".git" },
+    file_ignore_patterns = { "node_modules", ".git", "venv" },
     defaults = {
         sorting_strategy = "ascending",
         layout_config = {
@@ -23,11 +23,24 @@ require("telescope").setup {
             require("telescope.themes").get_dropdown {
 
             }
-        }
+        },
+        project = {
+            base_dirs = {
+                '/mnt/AA4C6EDE4C6EA4B3/Programming/',
+            },
+            hidden_files = true,
+            theme = "dropdown",
+        },
+        file_browser = {
+            hidden_files = true,
+            theme = "dropdown",
+        },
     },
     pickers = {
         colorscheme = {
-            enable_preview = true
+            enable_preview = true,
+            theme = "dropdown",
+            previewer = true,
         },
         current_buffer_fuzzy_find = {
             previewer = false,
@@ -43,7 +56,28 @@ require("telescope").setup {
                 width = 0.5,
             }
         },
-  }
+        lsp_code_actions = {
+            previewer = false,
+            layout_config = {
+                height = 0.5,
+                width = 0.5,
+            }
+        },
+        lsp_range_code_actions = {
+            previewer = false,
+            layout_config = {
+                height = 0.5,
+                width = 0.5,
+            }
+        },
+        lsp_document_symbols = {
+            previewer = false,
+            layout_config = {
+                height = 0.5,
+                width = 0.5,
+            },
+        },
+    }
 }
 
 require("telescope").load_extension("flutter")
@@ -66,7 +100,7 @@ vim.api.nvim_set_keymap(
 
 vim.api.nvim_set_keymap(
     "n",
-    "<space>fp",
+    "<leader>fp",
     ":Telescope file_browser<CR>",
     { desc = "Browse Files With Telescope" }
 )
@@ -77,9 +111,8 @@ require 'telescope-lsp-handlers'.setup({
     },
 })
 
-vim.keymap.set('n', '<leader>flr', function() require('telescope.builtin').lsp_references() end,
+set('n', '<leader>flr', function() require('telescope.builtin').lsp_references() end,
     { desc = "LSP References", noremap = true, silent = true })
-
 
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('dap')

@@ -32,9 +32,7 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "Live Grep" })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Buffers" })
 -- vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "Help" })
 keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent Files" })
-
--- UndoTree Keymaps
-keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "UndoTreeToggle" })
+keymap.set("n", "<leader>cd", builtin.lsp_document_symbols, { desc = "LSP Document Symbols" })
 keymap.set("n", "<leader>k", "<CMD>Telescope keymaps<CR>", { desc = "Keymaps With Telescope" })
 keymap.set("n", "<leader>fwa", "<CMD>Telescope grep_string<CR>", { desc = "Find Word Current Word" })
 keymap.set("n", "<leader>fwc", "<CMD>Telescope current_buffer_fuzzy_find<CR>",
@@ -44,19 +42,15 @@ keymap.set("n", "<leader>fc", "<CMD>Telescope commands<CR>", { desc = "Find Comm
 keymap.set("n", "<leader>fd", "<CMD>Telescope diagnostics<CR>", { desc = "Find Diagnostics" })
 keymap.set("n", "<leader>tr", "<CMD>Telescope resume<CR>", { desc = "Resume Last Telescope action" })
 
+-- UndoTree Keymaps
+keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "UndoTreeToggle" })
+
 keymap.set("n", "<leader>l", "<CMD>Lazy<CR>", { desc = "Open Lazy" })
 
 keymap.set("n", "<leader>sr", ":%s/", { desc = "Search and Replace In all the File" })
 
 -- Git Blame Messages Keymaps
 keymap.set("n", "<leader>g", "<CMD>GitMessenger<CR>", { desc = "Git Blame in Floating Window" })
-
-
--- Clipboard Keymaps
-vim.keymap.set('n', '<leader>c', require('osc52').copy_operator, { expr = true })
-vim.keymap.set('n', '<leader>cc', '<leader>c_', { remap = true })
-vim.keymap.set('v', '<leader>c', require('osc52').copy_visual)
-
 
 -- Trouble
 -- Lua
@@ -78,3 +72,4 @@ vim.keymap.set("n", "<C-=", [[<cmd>vertical resize +5<cr>]]) -- make the window 
 vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
 vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
 vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
+
