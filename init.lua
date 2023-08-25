@@ -17,9 +17,6 @@ local plugins = {
     {
         "folke/tokyonight.nvim",
     },
-    {
-        'nathom/filetype.nvim'
-    },
     -- Debugging
     {
         "rcarriga/nvim-dap-ui",

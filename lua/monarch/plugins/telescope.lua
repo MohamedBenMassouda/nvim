@@ -37,6 +37,9 @@ require("telescope").setup {
         },
     },
     pickers = {
+        grep_string = {
+            theme = "dropdown",
+        },
         colorscheme = {
             enable_preview = true,
             theme = "dropdown",
@@ -76,7 +79,7 @@ require("telescope").setup {
                 height = 0.5,
                 width = 0.5,
             },
-        },
+       },
     }
 }
 
@@ -109,7 +112,7 @@ require 'telescope-lsp-handlers'.setup({
     reference = {
         picker = require('telescope.themes').get_dropdown({}), -- get_dropdown generates a table, which gets merged with plugin defaults
     },
-})
+ })
 
 set('n', '<leader>flr', function() require('telescope.builtin').lsp_references() end,
     { desc = "LSP References", noremap = true, silent = true })
