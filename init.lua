@@ -156,23 +156,6 @@ local plugins = {
     {
         -- Status Line
         "nvim-lualine/lualine.nvim",
-        config = function()
-            require("lualine").setup {
-                options = {
-                    theme = "tokyonight",
-                    icons_enabled = true,
-                    globalstatus = true,
-                },
-                sections = {
-                    lualine_x = {
-                        "copilot",
-                        "filetype",
-                        "encoding",
-                        "fileformat",
-                    }
-                }
-            }
-        end,
     },
     {
         'nvim-telescope/telescope.nvim',
