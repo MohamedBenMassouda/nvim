@@ -3,7 +3,6 @@ local keymap = vim.keymap
 
 keymap.set("v", "J", ":m '>+1<CR>gv=gv'", { desc = "No Highlight" })
 
-
 keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Vim Explorer" })
 keymap.set("n", "<C-s>", "<CMD>w<CR>", { desc = "Save File" })
 keymap.set("n", "<C-q>", "<CMD>q<CR>", { desc = "Quit" })
@@ -50,7 +49,7 @@ keymap.set("n", "<leader>l", "<CMD>Lazy<CR>", { desc = "Open Lazy" })
 keymap.set("n", "<leader>sr", ":%s/", { desc = "Search and Replace In all the File" })
 
 -- Git Blame Messages Keymaps
-keymap.set("n", "<leader>g", "<CMD>GitMessenger<CR>", { desc = "Git Blame in Floating Window" })
+keymap.set("n", "<leader>gm", "<CMD>GitMessenger<CR>", { desc = "Git Blame in Floating Window" })
 
 -- Trouble
 -- Lua
@@ -73,3 +72,15 @@ vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window sma
 vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
 vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
 
+-- Git
+local git = require("gitsigns")
+
+keymap.set("n", "<leader>gs", git.stage_hunk, { desc = "Stage Hunk" })
+keymap.set("n", "<leader>gu", git.undo_stage_hunk, { desc = "Undo Stage Hunk" })
+keymap.set("n", "<leader>gr", git.reset_hunk, { desc = "Reset Hunk" })
+keymap.set("n", "<leader>gR", git.reset_buffer, { desc = "Reset Buffer" })
+keymap.set("n", "<leader>gp", git.preview_hunk, { desc = "Preview Hunk" })
+keymap.set("n", "<leader>gd", git.diffthis, { desc = "Difference" })
+keymap.set("n", "<leader>gb", git.blame_line, { desc = "Blame Line" })
+keymap.set("n", "<leader>gS", git.stage_buffer, { desc = "Stage Buffer" })
+keymap.set("n", "<leader>gU", git.reset_buffer_index, { desc = "Reset Buffer Index" })
