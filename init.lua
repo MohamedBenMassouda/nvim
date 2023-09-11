@@ -508,7 +508,7 @@ local plugins = {
                 select_ease.swap_nodes({ queries = queries, direction = "next" })
             end, {})
         end,
-    }
+    },
 }
 
 
