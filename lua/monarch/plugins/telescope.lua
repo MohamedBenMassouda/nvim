@@ -6,7 +6,7 @@ set("n", "<leader>th", builtin.colorscheme, { desc = "ColorScheme Preview" })
 set("n", "<leader>h", builtin.help_tags, { desc = "Help Tag" })
 
 require("telescope").setup {
-    file_ignore_patterns = { "node_modules", ".git", "venv" },
+    file_ignore_patterns = { "node_modules/", ".git/", "venv/" },
     defaults = {
         sorting_strategy = "ascending",
         layout_config = {
@@ -20,7 +20,7 @@ require("telescope").setup {
             auto_quoting = true,
         },
         ["ui-select"] = {
-            require("telescope.themes").get_dropdown {
+            require("telescope.themes").get_cursor {
 
             }
         },
@@ -61,6 +61,7 @@ require("telescope").setup {
         },
         lsp_code_actions = {
             previewer = false,
+            theme = "cursor",
             layout_config = {
                 height = 0.5,
                 width = 0.5,

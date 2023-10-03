@@ -24,7 +24,6 @@ local plugins = {
             'mfussenegger/nvim-dap',
             'theHamsta/nvim-dap-virtual-text',
             'jay-babu/mason-nvim-dap.nvim',
-            'leoluz/nvim-dap-go',
             'mfussenegger/nvim-dap-python',
             {
                 'folke/neodev.nvim',
@@ -224,6 +223,7 @@ local plugins = {
             { 'saadparwaiz1/cmp_luasnip' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'hrsh7th/cmp-nvim-lua' },
+            { 'dcampos/cmp-emmet-vim' },
 
             -- Snippets
             { 'L3MON4D3/LuaSnip' },
@@ -386,8 +386,10 @@ local plugins = {
         dependencies = { -- optional packages
             "ray-x/guihua.lua",
             "neovim/nvim-lspconfig",
+            'leoluz/nvim-dap-go',
         },
         config = function()
+            -- Check if a go project then setup
             require("go").setup()
         end,
         event = { "CmdlineEnter" },
@@ -509,6 +511,18 @@ local plugins = {
             end, {})
         end,
     },
+    {
+        "brenoprata10/nvim-highlight-colors",
+        config = function()
+            require('nvim-highlight-colors').setup {}
+        end,
+    },
+    {
+        'DNLHC/glance.nvim'
+    },
+{
+        "nvimtools/none-ls.nvim"
+    }
 }
 
 

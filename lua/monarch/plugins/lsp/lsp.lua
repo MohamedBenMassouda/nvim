@@ -4,6 +4,7 @@ local lsp_format = require("lsp-format")
 
 lsp_format.setup {}
 lsp_config.lua_ls.setup { on_attach = lsp_format.on_attach }
+lsp_config.dartls.setup { on_attach = lsp_format.on_attach }
 
 require("neodev").setup({
     library = { plugins = { "nvim-dap-ui" }, types = true },
@@ -29,9 +30,9 @@ lsp.ensure_installed({
 -- Fix Undefined global 'vim'
 lsp.nvim_workspace()
 
-lsp.setup_nvim_cmp({
-    mapping = cmp_mappings
-})
+-- lsp.setup_nvim_cmp({
+--     mapping = cmp_mappings
+-- })
 
 lsp.set_preferences({
     suggest_lsp_servers = true,
@@ -66,27 +67,13 @@ vim.diagnostic.config({
     virtual_text = true
 })
 
-local lspconfig = require('lspconfig')
-
-lspconfig["dartls"].setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-})
+-- lspconfig["dartls"].setup({
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+-- })
 
 require("go.format").gofmt()    -- gofmt only
 require("go.format").goimport() -- goimport + gofmt
-
-
--- Run gofmt on save
-
-local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*.go",
-    callback = function()
-        require('go.format').gofmt()
-    end,
-    group = format_sync_grp,
-})
 
 -- Run gofmt + goimport on save
 

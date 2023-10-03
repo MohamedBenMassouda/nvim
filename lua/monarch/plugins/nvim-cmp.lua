@@ -39,6 +39,8 @@ cmp.setup({
         { name = "cmp-nvim-lua" },
 
         { name = "nvim_lsp" }, -- lsp
+        { name = "emmet_vim" },
+        { name = 'nvim_lsp_signature_help' },
         { name = "luasnip" },  -- snippets
         { name = "buffer" },   -- text within current buffer
         { name = "path" },     -- file system paths
@@ -74,3 +76,4 @@ vim.keymap.set({ "i", "s" }, "<C-E>", function()
         luasnip.change_choice(1)
     end
 end, { silent = true })
+

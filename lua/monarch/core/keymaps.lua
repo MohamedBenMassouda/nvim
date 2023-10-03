@@ -68,9 +68,9 @@ vim.keymap.set("n", "<leader>dc", "<CMD>lua require'dap'.continue()<CR>", { desc
 
 
 vim.keymap.set("n", "<C-=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
-vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
-vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
-vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
+vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]])    -- make the window smaller vertically
+vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]])  -- make the window bigger horizontally by pressing shift and =
+vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]])  -- make the window smaller horizontally by pressing shift and -
 
 -- Git
 local git = require("gitsigns")
@@ -84,3 +84,10 @@ keymap.set("n", "<leader>gd", git.diffthis, { desc = "Difference" })
 keymap.set("n", "<leader>gb", git.blame_line, { desc = "Blame Line" })
 keymap.set("n", "<leader>gS", git.stage_buffer, { desc = "Stage Buffer" })
 keymap.set("n", "<leader>gU", git.reset_buffer_index, { desc = "Reset Buffer Index" })
+
+
+-- Glance
+vim.keymap.set('n', 'gD', '<CMD>Glance definitions<CR>')
+vim.keymap.set('n', 'gR', '<CMD>Glance references<CR>')
+vim.keymap.set('n', 'gY', '<CMD>Glance type_definitions<CR>')
+vim.keymap.set('n', 'gM', '<CMD>Glance implementations<CR>')
