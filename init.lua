@@ -550,7 +550,11 @@ local plugins = {
 	},
 	{
 		"stevearc/conform.nvim",
+		event = { "BufReadPre", "BufNewFile" },
 		opts = {},
+	},
+	{
+		"mfussenegger/nvim-lint",
 	},
 }
 

@@ -18,14 +18,22 @@ conform.setup({
 		javascript = { { "prettierd", "prettier" } },
 		typescript = { { "prettierd", "prettier" } },
 		typescriptreact = { { "prettierd", "prettier" } },
+		css = { "prettier" },
+		json = { "prettier" },
+		html = { "prettier" },
 	},
-	format_on_save = function(bufnr)
-		-- Disable with a global or buffer-local variable
-		if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-			return
-		end
-		return { timeout_ms = 500, lsp_fallback = true }
-	end,
+	-- format_on_save = function(bufnr)
+	-- 	-- Disable with a global or buffer-local variable
+	-- 	if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+	-- 		return
+	-- 	end
+	-- 	return { timeout_ms = 500, lsp_fallback = true }
+	-- end,
+	format_on_save = {
+		lsp_fallback = true,
+		async = false,
+		timeout_ms = 500,
+	},
 })
 
 vim.api.nvim_create_user_command("FormatDisable", function(args)
