@@ -17,6 +17,11 @@ local plugins = {
 	{
 		"folke/tokyonight.nvim",
 	},
+	{ "rose-pine/neovim", name = "rose-pine" },
+	{
+		"olimorris/onedarkpro.nvim",
+		priority = 1000,
+	},
 	-- Debugging
 	{
 		"rcarriga/nvim-dap-ui",
@@ -180,7 +185,19 @@ local plugins = {
 			require("nvim-treesitter.install").prefer_git = true
 			require("nvim-treesitter.configs").setup({
 				-- A list of parser names, or "all" (the five listed parsers should always be installed)
-				ensure_installed = { "javascript", "typescript", "c", "lua", "dart", "python", "tsx", "go" },
+				ensure_installed = {
+					"javascript",
+					"typescript",
+					"c",
+					"lua",
+					"dart",
+					"python",
+					"tsx",
+					"go",
+					"query",
+					"vim",
+					"vimdoc",
+				},
 
 				-- Install parsers synchronously (only applied to `ensure_installed`)
 				sync_install = false,
@@ -200,6 +217,24 @@ local plugins = {
 				indent = {
 					enable = true,
 					disable = { "dart" },
+				},
+				playground = {
+					enable = true,
+					disable = {},
+					updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+					persist_queries = false, -- Whether the query persists across vim sessions
+					keybindings = {
+						toggle_query_editor = "o",
+						toggle_hl_groups = "i",
+						toggle_injected_languages = "t",
+						toggle_anonymous_nodes = "a",
+						toggle_language_display = "I",
+						focus_language = "f",
+						unfocus_language = "F",
+						update = "R",
+						goto_node = "<cr>",
+						show_help = "?",
+					},
 				},
 			})
 		end,
@@ -295,25 +330,12 @@ local plugins = {
 
 	{
 		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
 		event = { "BufReadPost", "BufNewFile" },
-		opts = {
-			-- char = "▏",
-			char = "│",
-			filetype_exclude = {
-				"help",
-				"alpha",
-				"dashboard",
-				"neo-tree",
-				"Trouble",
-				"lazy",
-				"mason",
-				"notify",
-				"toggleterm",
-				"lazyterm",
-			},
-			show_trailing_blankline_indent = false,
-			show_current_context = false,
-		},
+		opts = {},
+		config = function()
+			require("ibl").setup()
+		end,
 	},
 
 	{
@@ -391,6 +413,20 @@ local plugins = {
 		config = function()
 			-- Check if a go project then setup
 			require("go").setup()
+
+			require("go.format").gofmt() -- gofmt only
+			require("go.format").goimport() -- goimport + gofmt
+
+			-- Run gofmt + goimport on save
+
+			local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				pattern = "*.go",
+				callback = function()
+					require("go.format").goimport()
+				end,
+				group = format_sync_grp,
+			})
 		end,
 		event = { "CmdlineEnter" },
 		ft = { "go", "gomod" },
@@ -555,6 +591,9 @@ local plugins = {
 	},
 	{
 		"mfussenegger/nvim-lint",
+	},
+	{
+		"nvim-treesitter/playground",
 	},
 }
 

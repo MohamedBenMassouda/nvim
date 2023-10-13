@@ -21,7 +21,7 @@ keymap.set("n", "<leader>sx", "<CMD>close<CR>", { desc = "Close Current Split Wi
 keymap.set("n", "<leader>to", "<CMD>tabnew<CR>", { desc = "Open New Tab" }) -- Open New Tab
 keymap.set("n", "<leader>tx", "<CMD>tabclose<CR>", { desc = "Close Current Tab" }) -- Close Current Tab
 keymap.set("n", "<leader>tn", "<CMD>tabn<CR>") -- Go to Tab Next
-keymap.set("n", "<leader>tp", "<CMD>tabp<CR>") -- Go to Tab Previous
+-- keymap.set("n", "<leader>tp", "<CMD>tabp<CR>") -- Go to Tab Previous
 
 keymap.set("n", "<leader>e", "<CMD>NvimTreeToggle<CR>")
 
@@ -111,3 +111,6 @@ vim.keymap.set({ "n", "v" }, "<Leader>cf", function()
 		timeout_ms = 500,
 	})
 end, { buffer = bufnr, desc = "Format File" })
+
+-- TreeSitter
+vim.keymap.set("n", "<leader>tp", "<CMD>TSPlaygroundToggle<CR>")

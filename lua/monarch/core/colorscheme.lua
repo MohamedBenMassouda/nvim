@@ -1,23 +1,42 @@
-vim.cmd("colorscheme catppuccin")
+require("catppuccin").setup {
+	flavour = "mocha", -- latte, frappe, macchiato, mocha
+	styles = {
+		comments = { "italic" },
+		variables = { "italic" },
+	},
+	integrations = {
+		cmp = true,
+		gitsigns = true,
+		nvimtree = true,
+		treesitter = true,
+		notify = true,
+		mini = false,
+		-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+		mason = true,
+		which_key = true,
+		dap = { enabled = true, enable_ui = true },
+		telescope = {
+			enabled = true,
+			style = "nvchad",
+		},
+	},
+}
 
--- Telescope Colors Customization
--- local colors = require("catppuccin.palettes").get_palette()
--- local TelescopeColor = {
---     TelescopeMatching = { fg = colors.flamingo },
---     TelescopeSelection = { fg = colors.text, bg = colors.surface0, bold = true },
---
---     TelescopePromptPrefix = { bg = colors.surface0 },
---     TelescopePromptNormal = { bg = colors.surface0 },
---     TelescopeResultsNormal = { bg = colors.mantle },
---     TelescopePreviewNormal = { bg = colors.mantle },
---     TelescopePromptBorder = { bg = colors.surface0, fg = colors.surface0 },
---     TelescopeResultsBorder = { bg = colors.mantle, fg = colors.mantle },
---     TelescopePreviewBorder = { bg = colors.mantle, fg = colors.mantle },
---     TelescopePromptTitle = { bg = colors.pink, fg = colors.mantle },
---     TelescopeResultsTitle = { fg = colors.mantle },
---     TelescopePreviewTitle = { bg = colors.green, fg = colors.mantle },
--- }
---
--- for hl, col in pairs(TelescopeColor) do
---     vim.api.nvim_set_hl(0, hl, col)
+-- setup must be called before loading
+vim.cmd.colorscheme "catppuccin"
+
+local M = require "monarch.utils.colors"
+
+for hl, col in pairs(M.change_catpuccin_treesitter_colors()) do
+	vim.cmd("highlight! " .. hl .. " guifg=" .. col.fg .. " guibg=" .. (col.bg or "NONE"))
+end
+
+-- Change Treesitter Colors
+-- for hl, col in pairs(M.change_catpuccin_treesitter_colors()) do
+-- 	vim.cmd("highlight! " .. hl .. " guifg=" .. col.fg .. " guibg=" .. (col.bg or "NONE"))
+-- end
+
+-- Change the Highlight Color
+-- for hl, col in pairs(M.catppuccin_cmpp_colors()) do
+-- 	vim.cmd("highlight! " .. hl .. " guifg=" .. col.fg .. " guibg=" .. (col.bg or "NONE"))
 -- end

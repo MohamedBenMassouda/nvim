@@ -1,15 +1,13 @@
-local util = require("conform.util")
-local prettier = require("conform.formatters.prettier")
-local conform = require("conform")
+local util = require "conform.util"
+local prettier = require "conform.formatters.prettier"
+local conform = require "conform"
 
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*",
-	callback = function(args)
-		conform.format({ bufnr = args.buf })
-	end,
+	callback = function(args) conform.format { bufnr = args.buf } end,
 })
 
-conform.setup({
+conform.setup {
 	formatters_by_ft = {
 		lua = { "stylua" },
 		-- Conform will run multiple formatters sequentially
@@ -34,7 +32,7 @@ conform.setup({
 		async = false,
 		timeout_ms = 500,
 	},
-})
+}
 
 vim.api.nvim_create_user_command("FormatDisable", function(args)
 	if args.bang then
