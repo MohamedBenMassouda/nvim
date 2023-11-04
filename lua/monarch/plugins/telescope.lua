@@ -3,7 +3,7 @@ local builtin = require "telescope.builtin"
 local set = vim.keymap.set
 
 set("n", "<leader>th", builtin.colorscheme, { desc = "ColorScheme Preview" })
-set("n", "<leader>h", builtin.help_tags, { desc = "Help Tag" })
+set("n", "<leader>fh", builtin.help_tags, { desc = "Help Tag" })
 
 require("telescope").setup {
 	defaults = {
@@ -104,7 +104,7 @@ vim.api.nvim_set_keymap(
 	{ desc = "Find added Projects With Telescope" }
 )
 
-vim.api.nvim_set_keymap("n", "<leader>fp", ":Telescope file_browser<CR>", { desc = "Browse Files With Telescope" })
+vim.api.nvim_set_keymap("n", "<leader>fp", "<CMD>Telescope file_browser<CR>", { desc = "Browse Files With Telescope" })
 
 require("telescope-lsp-handlers").setup {
 	reference = {

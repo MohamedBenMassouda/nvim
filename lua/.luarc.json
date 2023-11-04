@@ -60,6 +60,8 @@
         "/home/monarch/.local/share/nvim/lazy/lualine.nvim/lua",
         "/home/monarch/.config/nvim/lua",
         "${3rd}/luv/library",
+        "${3rd}/luv/library",
+        "${3rd}/luv/library",
         "${3rd}/luv/library"
     ],
     "workspace.checkThirdParty": false

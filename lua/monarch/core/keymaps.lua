@@ -1,13 +1,13 @@
 vim.g.mapleader = " "
 local keymap = vim.keymap
 
-keymap.set("v", "J", ":m '>+1<CR>gv=gv'", { desc = "No Highlight" })
-
 keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Vim Explorer" })
-keymap.set("n", "<C-s>", function()
-	vim.cmd("w")
-end, { desc = "Save File" })
+keymap.set("v", "J", "m '>+1<CR>gv=gv'", { desc = "No Highlight" })
+keymap.set("n", "<C-s>", function() vim.cmd "w" end, { desc = "Save File" })
 keymap.set("n", "<C-q>", "<CMD>q<CR>", { desc = "Quit" })
+
+keymap.set("n", "<leader>y", '"+yy', { desc = "Copy to Clipboard" })
+keymap.set("v", "<leader>y", '"+y', { desc = "Copy to Clipboard" })
 
 keymap.set("n", "x", '"_x"')
 keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment current number" })
@@ -26,7 +26,7 @@ keymap.set("n", "<leader>tn", "<CMD>tabn<CR>") -- Go to Tab Next
 keymap.set("n", "<leader>e", "<CMD>NvimTreeToggle<CR>")
 
 -- Telescope Keymaps
-local builtin = require("telescope.builtin")
+local builtin = require "telescope.builtin"
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
@@ -58,21 +58,21 @@ keymap.set("n", "<leader>gm", "<CMD>GitMessenger<CR>", { desc = "Git Blame in Fl
 
 -- Trouble
 -- Lua
-vim.keymap.set("n", "<leader>xx", function()
-	require("trouble").open()
-end, { desc = "Open Trouble" })
-vim.keymap.set("n", "<leader>xw", function()
-	require("trouble").open("workspace_diagnostics")
-end, { desc = "Open Trouble Workspace Diagnostics" })
-vim.keymap.set("n", "<leader>xd", function()
-	require("trouble").open("document_diagnostics")
-end, { desc = "Open Trouble Document Diagnostics" })
-vim.keymap.set("n", "<leader>xl", function()
-	require("trouble").open("quickfix")
-end, { desc = "Open Trouble Quickfix" })
-vim.keymap.set("n", "<leader>xq", function()
-	require("trouble").open("loclist")
-end, { desc = "Open Trouble Loclist" })
+vim.keymap.set("n", "<leader>xx", function() require("trouble").open() end, { desc = "Open Trouble" })
+vim.keymap.set(
+	"n",
+	"<leader>xw",
+	function() require("trouble").open "workspace_diagnostics" end,
+	{ desc = "Open Trouble Workspace Diagnostics" }
+)
+vim.keymap.set(
+	"n",
+	"<leader>xd",
+	function() require("trouble").open "document_diagnostics" end,
+	{ desc = "Open Trouble Document Diagnostics" }
+)
+vim.keymap.set("n", "<leader>xl", function() require("trouble").open "quickfix" end, { desc = "Open Trouble Quickfix" })
+vim.keymap.set("n", "<leader>xq", function() require("trouble").open "loclist" end, { desc = "Open Trouble Loclist" })
 
 -- Debugging
 vim.keymap.set("n", "<leader>b", "<CMD>lua require'dap'.toggle_breakpoint()<CR>", { desc = "Toggle Breakpoint" })
@@ -84,7 +84,7 @@ vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window b
 vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
 
 -- Git
-local git = require("gitsigns")
+local git = require "gitsigns"
 
 keymap.set("n", "<leader>gs", git.stage_hunk, { desc = "Stage Hunk" })
 keymap.set("n", "<leader>gu", git.undo_stage_hunk, { desc = "Undo Stage Hunk" })
@@ -105,12 +105,23 @@ vim.keymap.set("n", "gM", "<CMD>Glance implementations<CR>")
 -- Formatting
 vim.keymap.set({ "n", "v" }, "<Leader>cf", function()
 	-- vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-	require("conform").format({
+	require("conform").format {
 		async = false,
 		lsp_fallback = true,
 		timeout_ms = 500,
-	})
+	}
 end, { buffer = bufnr, desc = "Format File" })
 
 -- TreeSitter
 vim.keymap.set("n", "<leader>tp", "<CMD>TSPlaygroundToggle<CR>")
+vim.keymap.set(
+	"n",
+	"[c",
+	function() require("treesitter-context").go_to_context() end,
+	{ silent = true, desc = "Go to Previous Context" }
+)
+
+-- Mini
+require("mini.pick").setup()
+keymap.set("n", "<leader>md", "<CMD>lua MiniExtra.pickers.diagnostic()<CR>", { desc = "Open Mini" })
+keymap.set("n", "<leader>mf", "<CMD>lua MiniPick.builtin.files()<CR>", { desc = "Open Mini" })

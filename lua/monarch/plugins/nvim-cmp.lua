@@ -10,7 +10,7 @@ local lspkind = require "lspkind"
 
 require("luasnip").filetype_extend("javascriptreact", { "html" })
 require("luasnip").filetype_extend("typescriptreact", { "html" })
-
+require("luasnip").filetype_extend("php", { "html" })
 -- load vs-code like snippets from plugins (e.g. friendly-snippets)
 require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -20,7 +20,9 @@ lspkind.init {}
 
 cmp.setup {
 	window = {
+		completion = cmp.config.window.bordered(),
 		max_width = 100,
+		scrollbar = false,
 	},
 	snippet = {
 		expand = function(args) luasnip.lsp_expand(args.body) end,
@@ -39,7 +41,6 @@ cmp.setup {
 		{ name = "cmp-nvim-lua" },
 
 		{ name = "nvim_lsp" }, -- lsp
-		{ name = "emmet_vim" },
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "luasnip" }, -- snippets
 		{ name = "buffer" }, -- text within current buffer

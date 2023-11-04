@@ -16,4 +16,7 @@ wk.register({
 	h = {
 		name = "Harpoon",
 	},
+	d = {
+		name = "DAP",
+	},
 }, { prefix = "<leader>" })

@@ -11,8 +11,10 @@ opt.expandtab = true
 opt.autoindent = true
 
 -- For dart files set tabstop and shiftwidth to 2
-vim.cmd("autocmd BufNewFile,BufRead *.dart setlocal tabstop=2 shiftwidth=2")
-vim.cmd("autocmd BufNewFile,BufRead *.tsx setlocal tabstop=2 shiftwidth=2")
+vim.cmd "autocmd BufNewFile,BufRead *.dart setlocal tabstop=2 shiftwidth=2"
+vim.cmd "autocmd BufNewFile,BufRead *.tsx setlocal tabstop=2 shiftwidth=2"
+vim.cmd "autocmd BufNewFile,BufRead *.json setlocal tabstop=2 shiftwidth=2"
+vim.cmd "autocmd BufNewFile,BufRead *.js setlocal tabstop=2 shiftwidth=2"
 
 -- Line Wrapping
 opt.wrap = false
@@ -23,6 +25,7 @@ vim.opt.termguicolors = true
 opt.ignorecase = true
 opt.smartcase = true
 
+opt.hlsearch = true
 opt.incsearch = true
 
 opt.colorcolumn = "80"
@@ -35,5 +38,5 @@ opt.splitbelow = true
 
 -- opt.iskeyword:append("-")
 -- UndoTree
-opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+opt.undodir = os.getenv "HOME" .. "/.vim/undodir"
 opt.undofile = true

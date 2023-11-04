@@ -1,3 +1,9 @@
+function ColorMyPencils(color)
+	vim.cmd "colorscheme catppuccin"
+	vim.api.nvim_set_hl(0, "Normal", { bg = "None" })
+	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "None" })
+end
+
 require("catppuccin").setup {
 	flavour = "mocha", -- latte, frappe, macchiato, mocha
 	styles = {
@@ -15,10 +21,6 @@ require("catppuccin").setup {
 		mason = true,
 		which_key = true,
 		dap = { enabled = true, enable_ui = true },
-		telescope = {
-			enabled = true,
-			style = "nvchad",
-		},
 	},
 }
 
@@ -31,12 +33,6 @@ for hl, col in pairs(M.change_catpuccin_treesitter_colors()) do
 	vim.cmd("highlight! " .. hl .. " guifg=" .. col.fg .. " guibg=" .. (col.bg or "NONE"))
 end
 
--- Change Treesitter Colors
--- for hl, col in pairs(M.change_catpuccin_treesitter_colors()) do
--- 	vim.cmd("highlight! " .. hl .. " guifg=" .. col.fg .. " guibg=" .. (col.bg or "NONE"))
--- end
-
--- Change the Highlight Color
--- for hl, col in pairs(M.catppuccin_cmpp_colors()) do
+-- for hl, col in pairs(M.catppuccin_cmp_colors()) do
 -- 	vim.cmd("highlight! " .. hl .. " guifg=" .. col.fg .. " guibg=" .. (col.bg or "NONE"))
 -- end

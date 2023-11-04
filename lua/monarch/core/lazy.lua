@@ -20,7 +20,6 @@ local plugins = {
 	{ "rose-pine/neovim", name = "rose-pine" },
 	{
 		"olimorris/onedarkpro.nvim",
-		priority = 1000,
 	},
 	-- Debugging
 	{
@@ -29,12 +28,28 @@ local plugins = {
 			"mfussenegger/nvim-dap",
 			"theHamsta/nvim-dap-virtual-text",
 			"jay-babu/mason-nvim-dap.nvim",
-			"mfussenegger/nvim-dap-python",
 			{
 				"folke/neodev.nvim",
 				opts = {},
+				config = function()
+					require("neodev").setup {
+						library = {
+							plugins = {
+								"nvim-dap-ui",
+							},
+							types = true,
+						},
+					}
+				end,
 			},
 		},
+	},
+	-- Debugging for Python
+	{
+		"mfussenegger/nvim-dap-python",
+		dependencies = "mfussenegger/nvim-dap",
+		ft = "python",
+		config = function() require("dap-python").setup "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python" end,
 	},
 	{
 		"nvim-lua/plenary.nvim",
@@ -168,7 +183,6 @@ local plugins = {
 			"Slotos/telescope-lsp-handlers.nvim",
 			"nvim-telescope/telescope-dap.nvim",
 		},
-		config = function() require("telescope").setup(opts) end,
 	},
 	{
 		"mbbill/undotree",
@@ -185,7 +199,7 @@ local plugins = {
 					enable = true,
 					enable_rename = true,
 					enable_close = true,
-					enable_close_on_slash = true,
+					enable_close_on_slash = false,
 				},
 				-- A list of parser names, or "all" (the five listed parsers should always be installed)
 				ensure_installed = {
@@ -219,7 +233,7 @@ local plugins = {
 				},
 				indent = {
 					enable = true,
-					disable = { "dart" },
+					disable = { "dart", "python" },
 				},
 				playground = {
 					enable = true,
@@ -261,7 +275,6 @@ local plugins = {
 			{ "saadparwaiz1/cmp_luasnip" },
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "hrsh7th/cmp-nvim-lua" },
-			{ "dcampos/cmp-emmet-vim" },
 
 			-- Snippets
 			{ "L3MON4D3/LuaSnip" },
@@ -276,12 +289,6 @@ local plugins = {
 			-- Lsp Signature
 			{ "ray-x/lsp_signature.nvim" },
 
-			-- Lsp Code Actions
-			{
-				"kosayoda/nvim-lightbulb",
-				opts = {},
-			},
-
 			-- Lsp kind
 			{
 				"onsails/lspkind-nvim",
@@ -292,6 +299,7 @@ local plugins = {
 	{
 		"akinsho/flutter-tools.nvim",
 		lazy = false,
+		ft = "dart",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"stevearc/dressing.nvim", -- optional for vim.ui.select
@@ -309,6 +317,9 @@ local plugins = {
 		},
 		config = function()
 			require("noice").setup {
+				notify = {
+					enable = false,
+				},
 				lsp = {
 					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
 					override = {
@@ -344,6 +355,7 @@ local plugins = {
 			require("mini.cursorword").setup()
 			require("mini.surround").setup()
 			require("mini.move").setup()
+			require("mini.extra").setup()
 		end,
 	},
 	{
@@ -375,16 +387,6 @@ local plugins = {
 		end,
 	},
 	{
-		"mawkler/modicator.nvim",
-		init = function()
-			-- These are required for Modicator to work
-			vim.o.cursorline = true
-			vim.o.number = true
-			vim.o.termguicolors = true
-		end,
-		config = function() require("modicator").setup() end,
-	},
-	{
 		"dart-lang/dart-vim-plugin",
 	},
 	-- Git Blame Messages
@@ -394,9 +396,6 @@ local plugins = {
 	{
 		"nvim-pack/nvim-spectre",
 		opts = {},
-	},
-	{
-		"lalitmee/browse.nvim",
 	},
 	{
 		"ray-x/go.nvim",
@@ -409,11 +408,9 @@ local plugins = {
 			-- Check if a go project then setup
 			require("go").setup()
 
-			require("go.format").gofmt() -- gofmt only
 			require("go.format").goimport() -- goimport + gofmt
 
 			-- Run gofmt + goimport on save
-
 			local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				pattern = "*.go",
@@ -614,6 +611,35 @@ local plugins = {
 	{
 		"ziontee113/color-picker.nvim",
 		config = function() require("color-picker").setup {} end,
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		config = function()
+			require("treesitter-context").setup {
+				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+				max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+				min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+				line_numbers = true,
+				multiline_threshold = 20, -- Maximum number of lines to show for a single context
+				trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+				mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
+				-- Separator between context and content. Should be a single character string, like '-'.
+				-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+				separator = nil,
+				zindex = 20, -- The Z-index of the context window
+				on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+			}
+		end,
+	},
+	{
+		"RRethy/nvim-base16",
+	},
+	{
+		"ray-x/navigator.lua",
+		dependencies = {
+			{ "ray-x/guihua.lua", run = "cd lua/fzy && make" },
+			{ "neovim/nvim-lspconfig" },
+		},
 	},
 }
 
