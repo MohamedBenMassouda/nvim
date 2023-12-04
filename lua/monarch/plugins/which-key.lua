@@ -2,7 +2,7 @@ local wk = require "which-key"
 
 wk.register({
 	f = {
-		name = "Telescope", -- optional group name
+		name = "FzfLua", -- optional group name
 	},
 	s = {
 		name = "Splits",
@@ -18,5 +18,8 @@ wk.register({
 	},
 	d = {
 		name = "DAP",
+	},
+	ld = {
+		name = "LspDiagnostics",
 	},
 }, { prefix = "<leader>" })

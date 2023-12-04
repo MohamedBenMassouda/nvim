@@ -9,5 +9,8 @@
         "/home/monarch/.config/nvim/lua",
         "/home/monarch/.config/nvim/lua",
         "${3rd}/luv/library"
+    ],
+    "diagnostics.globals": [
+        "cmds"
     ]
 }

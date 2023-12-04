@@ -65,9 +65,6 @@ local plugins = {
 		{ "catppuccin/nvim", name = "catppuccin" },
 	},
 	{
-		{ "akinsho/toggleterm.nvim", version = "*" },
-	},
-	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
 		init = function()
@@ -114,60 +111,60 @@ local plugins = {
 	{
 		"kyazdani42/nvim-web-devicons",
 	},
-	{
-		"nvim-tree/nvim-tree.lua",
-		lazy = false,
-		-- config = function()
-		--     vim.g.loaded_netrw = 1
-		--     vim.g.loaded_netrwPlugin = 1
-		--
-		--     -- set termguicolors to enable highlight groups
-		--     vim.opt.termguicolors = true
-		--
-		--
-		--     -- OR setup with some options
-		--     require("nvim-tree").setup({
-		--         sort_by = "case_sensitive",
-		--         view = {
-		--             width = 30,
-		--             float = {
-		--                 enable = true,
-		--                 quit_on_focus_loss = true,
-		--                 open_win_config ={
-		--                     relative = "editor",
-		--                     border = "rounded",
-		--                     width = 30,
-		--                     height = 30,
-		--                     row = 1,
-		--                     col = 1,
-		--                 }
-		--             },
-		--         },
-		--         renderer = {
-		--             group_empty = true,
-		--         },
-		--         filters = {
-		--             dotfiles = true,
-		--         },
-		--         diagnostics = {
-		--             enable = true,
-		--             show_on_dirs = true,
-		--             show_on_open_dirs = false,
-		--             debounce_delay = 50,
-		--             severity = {
-		--                 min = vim.diagnostic.severity.HINT,
-		--                 max = vim.diagnostic.severity.ERROR,
-		--             },
-		--             icons = {
-		--                 hint = "",
-		--                 info = "",
-		--                 warning = "",
-		--                 error = "",
-		--             },
-		--         },
-		--     })
-		-- end
-	},
+	-- {
+	-- 	"nvim-tree/nvim-tree.lua",
+	-- 	lazy = false,
+	-- 	config = function()
+	-- 	    vim.g.loaded_netrw = 1
+	-- 	    vim.g.loaded_netrwPlugin = 1
+	--
+	-- 	    -- set termguicolors to enable highlight groups
+	-- 	    vim.opt.termguicolors = true
+	--
+	--
+	-- 	    -- OR setup with some options
+	-- 	    require("nvim-tree").setup({
+	-- 	        sort_by = "case_sensitive",
+	-- 	        view = {
+	-- 	            width = 30,
+	-- 	            float = {
+	-- 	                enable = true,
+	-- 	                quit_on_focus_loss = true,
+	-- 	                open_win_config ={
+	-- 	                    relative = "editor",
+	-- 	                    border = "rounded",
+	-- 	                    width = 30,
+	-- 	                    height = 30,
+	-- 	                    row = 1,
+	-- 	                    col = 1,
+	-- 	                }
+	-- 	            },
+	-- 	        },
+	-- 	        renderer = {
+	-- 	            group_empty = true,
+	-- 	        },
+	-- 	        filters = {
+	-- 	            dotfiles = true,
+	-- 	        },
+	-- 	        diagnostics = {
+	-- 	            enable = true,
+	-- 	            show_on_dirs = true,
+	-- 	            show_on_open_dirs = false,
+	-- 	            debounce_delay = 50,
+	-- 	            severity = {
+	-- 	                min = vim.diagnostic.severity.HINT,
+	-- 	                max = vim.diagnostic.severity.ERROR,
+	-- 	            },
+	-- 	            icons = {
+	-- 	                hint = "",
+	-- 	                info = "",
+	-- 	                warning = "",
+	-- 	                error = "",
+	-- 	            },
+	-- 	        },
+	-- 	    })
+	-- 	end
+	-- },
 	{
 		-- Status Line
 		"nvim-lualine/lualine.nvim",
@@ -179,7 +176,6 @@ local plugins = {
 			"nvim-telescope/telescope-ui-select.nvim",
 			"nvim-telescope/telescope-live-grep-args.nvim",
 			"nvim-telescope/telescope-file-browser.nvim",
-			"nvim-telescope/telescope-project.nvim",
 			"Slotos/telescope-lsp-handlers.nvim",
 			"nvim-telescope/telescope-dap.nvim",
 		},
@@ -315,29 +311,6 @@ local plugins = {
 			"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
 		},
-		config = function()
-			require("noice").setup {
-				notify = {
-					enable = false,
-				},
-				lsp = {
-					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-					override = {
-						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-						["vim.lsp.util.stylize_markdown"] = true,
-						["cmp.entry.get_documentation"] = true,
-					},
-				},
-				-- you can enable a preset for easier configuration
-				presets = {
-					bottom_search = true, -- use a classic bottom cmdline for search
-					command_palette = true, -- position the cmdline and popupmenu together
-					long_message_to_split = true, -- long messages will be sent to a split
-					inc_rename = false, -- enables an input dialog for inc-rename.nvim
-					lsp_doc_border = true, -- add a border to hover docs and signature help
-				},
-			}
-		end,
 	},
 
 	{
@@ -349,7 +322,13 @@ local plugins = {
 	},
 
 	{
-		"echasnovski/mini.nvim",
+		"echasnovski/mini.cursorword",
+		dependencies = {
+			"echasnovski/mini.surround",
+			"echasnovski/mini.move",
+			"echasnovski/mini.extra",
+			"echasnovski/mini.pick",
+		},
 		version = false,
 		config = function()
 			require("mini.cursorword").setup()
@@ -399,6 +378,9 @@ local plugins = {
 	},
 	{
 		"ray-x/go.nvim",
+		event = { "CmdlineEnter" },
+		ft = { "go", "gomod" },
+		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 		dependencies = { -- optional packages
 			"ray-x/guihua.lua",
 			"neovim/nvim-lspconfig",
@@ -418,9 +400,6 @@ local plugins = {
 				group = format_sync_grp,
 			})
 		end,
-		event = { "CmdlineEnter" },
-		ft = { "go", "gomod" },
-		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 	},
 	{
 		"ziontee113/SelectEase",
@@ -589,11 +568,6 @@ local plugins = {
 		config = function() require("crates").setup() end,
 	},
 	{
-		"rust-lang/rust.vim",
-		ft = "rust",
-		init = function() vim.g.rustfmt_autosave = 1 end,
-	},
-	{
 		"stevearc/conform.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {},
@@ -611,6 +585,7 @@ local plugins = {
 	{
 		"ziontee113/color-picker.nvim",
 		config = function() require("color-picker").setup {} end,
+		ft = { "css", "ts", "tsx", "jsx", "dart" },
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",
@@ -635,11 +610,21 @@ local plugins = {
 		"RRethy/nvim-base16",
 	},
 	{
-		"ray-x/navigator.lua",
-		dependencies = {
-			{ "ray-x/guihua.lua", run = "cd lua/fzy && make" },
-			{ "neovim/nvim-lspconfig" },
+		"ibhagwan/fzf-lua",
+	},
+	{
+		"luckasRanarison/clear-action.nvim",
+		event = "LspAttach",
+		opts = {
+			mappings = {
+				code_action = {
+					"<leader>ca",
+				},
+			},
 		},
+	},
+	{
+		"ThePrimeagen/vim-be-good",
 	},
 }
 

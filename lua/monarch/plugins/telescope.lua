@@ -2,8 +2,8 @@ local builtin = require "telescope.builtin"
 
 local set = vim.keymap.set
 
-set("n", "<leader>th", builtin.colorscheme, { desc = "ColorScheme Preview" })
-set("n", "<leader>fh", builtin.help_tags, { desc = "Help Tag" })
+-- set("n", "<leader>th", builtin.colorscheme, { desc = "ColorScheme Preview" })
+-- set("n", "<leader>fh", builtin.help_tags, { desc = "Help Tag" })
 
 require("telescope").setup {
 	defaults = {
@@ -85,24 +85,17 @@ require("telescope").setup {
 
 require("telescope").load_extension "flutter"
 
-require("telescope").load_extension "ui-select"
-vim.keymap.set(
-	"n",
-	"<leader>fs",
-	require("telescope").extensions.live_grep_args.live_grep_args,
-	{ desc = "Find Word Live" }
-)
+-- vim.keymap.set(
+-- 	"n",
+-- 	"<leader>fs",
+-- 	require("telescope").extensions.live_grep_args.live_grep_args,
+-- 	{ desc = "Find Word Live" }
+-- )
 
 require("telescope").load_extension "file_browser"
 -- How to use project telescope
 -- c to create project with the current directory
 -- d to delete a project
-vim.api.nvim_set_keymap(
-	"n",
-	"<C-p>",
-	":lua require'telescope'.extensions.project.project{}<CR>",
-	{ desc = "Find added Projects With Telescope" }
-)
 
 vim.api.nvim_set_keymap("n", "<leader>fp", "<CMD>Telescope file_browser<CR>", { desc = "Browse Files With Telescope" })
 

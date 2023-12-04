@@ -15,6 +15,7 @@ vim.cmd "autocmd BufNewFile,BufRead *.dart setlocal tabstop=2 shiftwidth=2"
 vim.cmd "autocmd BufNewFile,BufRead *.tsx setlocal tabstop=2 shiftwidth=2"
 vim.cmd "autocmd BufNewFile,BufRead *.json setlocal tabstop=2 shiftwidth=2"
 vim.cmd "autocmd BufNewFile,BufRead *.js setlocal tabstop=2 shiftwidth=2"
+vim.cmd "autocmd BufNewFile,BufRead *.css setlocal tabstop=2 shiftwidth=2"
 
 -- Line Wrapping
 opt.wrap = false

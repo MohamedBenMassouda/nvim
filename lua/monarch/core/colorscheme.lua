@@ -5,12 +5,14 @@ function ColorMyPencils(color)
 end
 
 require("catppuccin").setup {
+	transparent_background = true,
 	flavour = "mocha", -- latte, frappe, macchiato, mocha
 	styles = {
 		comments = { "italic" },
 		variables = { "italic" },
 	},
 	integrations = {
+		noice = true,
 		cmp = true,
 		gitsigns = true,
 		nvimtree = true,

@@ -6,11 +6,37 @@ lsp_format.setup {}
 lsp_config.lua_ls.setup { on_attach = lsp_format.on_attach }
 lsp_config.dartls.setup { on_attach = lsp_format.on_attach }
 
-lsp_config.pyright.setup {
+-- lsp_config.pyright.setup {
+-- 	settings = {
+-- 		pyright = {
+-- 			autoImportCompletions = true,
+-- 		},
+-- 	},
+-- }
+
+lsp_config.pylsp.setup {
 	settings = {
-		pyright = {
-			autoImportCompletions = true,
+		pylsp = {
+			plugins = {
+				-- formatter options
+				-- black = { enabled = true },
+				-- autopep8 = { enabled = false },
+				-- yapf = { enabled = false },
+				-- -- linter options
+				-- pylint = { enabled = true, executable = "pylint" },
+				-- pyflakes = { enabled = false },
+				-- pycodestyle = { enabled = false },
+				-- -- type checker
+				-- pylsp_mypy = { enabled = true },
+				-- -- auto-completion options
+				-- jedi_completion = { fuzzy = true },
+				-- -- import sorting
+				-- pyls_isort = { enabled = true },
+			},
 		},
+	},
+	flags = {
+		debounce_text_changes = 200,
 	},
 }
 
@@ -27,8 +53,6 @@ lsp_config.lua_ls.setup {
 		},
 	},
 }
-
-lsp_config.kotlin_language_server.setup {}
 
 local function organize_imports()
 	local params = {
@@ -47,14 +71,6 @@ lsp_config.tsserver.setup {
 		},
 	},
 }
-
--- lsp_config.pylsp.setup {
--- 	plugins = {
--- 		rope_autoimport = {
--- 			enable = true,
--- 		},
--- 	},
--- }
 
 lsp.configure("intelephense", {
 	settings = {
@@ -75,15 +91,10 @@ lsp.preset "recommended"
 
 lsp.ensure_installed {
 	"tsserver",
-	"rust_analyzer",
 }
 
 -- Fix Undefined global 'vim'
 lsp.nvim_workspace()
-
--- lsp.setup_nvim_cmp({
---     mapping = cmp_mappings
--- })
 
 lsp.set_preferences {
 	suggest_lsp_servers = true,
@@ -99,16 +110,23 @@ lsp.set_sign_icons {
 lsp.on_attach(function(client, bufnr)
 	local opts = { buffer = bufnr, remap = false }
 
-	vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+	vim.keymap.set(
+		"n",
+		"gd",
+		function() vim.lsp.buf.definition() end,
+		vim.list_extend(opts, { desc = "Go To Definition" })
+	)
 	vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
 	vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
 	vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-	vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-	vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+	vim.keymap.set("n", "<leader>ldn", function() vim.diagnostic.goto_next() end, { desc = "Next Diagnostic" })
+	vim.keymap.set("n", "<leader>ldp", function() vim.diagnostic.goto_prev() end, { desc = "Previous Diagnostic" })
 	vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, { desc = "Code Action" })
 	vim.keymap.set("n", "<leader>rr", function() vim.lsp.buf.references() end, { desc = "Find References" })
 	vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, { desc = "Rename" })
 	vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+	vim.keymap.set("n", "<leader>ldd", vim.diagnostic.open_float, { desc = "Open Diagnostics In Float" })
+	vim.keymap.set("n", "<space>ldq", vim.diagnostic.setloclist, { desc = "Open Diagnostics" })
 end)
 
 lsp.setup()
@@ -130,3 +148,9 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 	},
 	update_in_insert = true,
 })
+
+require("dressing").setup {
+	select = {
+		backends = { "fzf_lua", "telescope", "fzf", "builtin", "nui" },
+	},
+}

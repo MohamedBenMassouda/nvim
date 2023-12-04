@@ -12,4 +12,6 @@ require "monarch.plugins.conform"
 require "monarch.plugins.linting"
 require "monarch.plugins.autotag"
 require "monarch.plugins.harpoon"
+require "monarch.plugins.fzf"
+require "monarch.plugins.noice"
 -- require("monarch.plugins.lsp.none-ls")

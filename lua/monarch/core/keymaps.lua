@@ -26,30 +26,29 @@ keymap.set("n", "<leader>tn", "<CMD>tabn<CR>") -- Go to Tab Next
 keymap.set("n", "<leader>e", "<CMD>NvimTreeToggle<CR>")
 
 -- Telescope Keymaps
-local builtin = require "telescope.builtin"
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
--- vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "Help" })
-keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent Files" })
-keymap.set("n", "<leader>cd", builtin.lsp_document_symbols, { desc = "LSP Document Symbols" })
-keymap.set("n", "<leader>k", "<CMD>Telescope keymaps<CR>", { desc = "Keymaps With Telescope" })
-keymap.set("n", "<leader>fwa", "<CMD>Telescope grep_string<CR>", { desc = "Find Word Current Word" })
+-- local builtin = require "telescope.builtin"
+-- vim.keymap.set("n", "<leader>ff", builtin.fd, { desc = "Find Files" })
+-- vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
+-- vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
+-- keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent Files" })
+-- keymap.set("n", "<leader>cd", builtin.lsp_document_symbols, { desc = "LSP Document Symbols" })
+-- keymap.set("n", "<leader>k", "<CMD>Telescope keymaps<CR>", { desc = "Keymaps With Telescope" })
+-- keymap.set("n", "<leader>fwa", "<CMD>Telescope grep_string<CR>", { desc = "Find Word Current Word" })
 keymap.set(
 	"n",
 	"<leader>fwc",
 	"<CMD>Telescope current_buffer_fuzzy_find<CR>",
 	{ desc = "Find Word in Current Buffer with Telescope" }
 )
-keymap.set("n", "<leader>ft", "<CMD>Telescope flutter commands<CR>", { desc = "Open Flutter Tools Commands" })
-keymap.set("n", "<leader>fc", "<CMD>Telescope commands<CR>", { desc = "Find Commands" })
-keymap.set("n", "<leader>fd", "<CMD>Telescope diagnostics<CR>", { desc = "Find Diagnostics" })
-keymap.set("n", "<leader>tr", "<CMD>Telescope resume<CR>", { desc = "Resume Last Telescope action" })
+-- keymap.set("n", "<leader>ft", "<CMD>Telescope flutter commands<CR>", { desc = "Open Flutter Tools Commands" })
+-- keymap.set("n", "<leader>fc", "<CMD>Telescope commands<CR>", { desc = "Find Commands" })
+-- keymap.set("n", "<leader>fd", "<CMD>Telescope diagnostics<CR>", { desc = "Find Diagnostics" })
+-- keymap.set("n", "<leader>tr", "<CMD>Telescope resume<CR>", { desc = "Resume Last Telescope action" })
 
 -- UndoTree Keymaps
 keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "UndoTreeToggle" })
 
-keymap.set("n", "<leader>l", "<CMD>Lazy<CR>", { desc = "Open Lazy" })
+-- keymap.set("n", "<leader>l", "<CMD>Lazy<CR>", { desc = "Open Lazy" })
 
 keymap.set("n", "<leader>sr", ":%s/", { desc = "Search and Replace In all the File" })
 
@@ -110,7 +109,7 @@ vim.keymap.set({ "n", "v" }, "<Leader>cf", function()
 		lsp_fallback = true,
 		timeout_ms = 500,
 	}
-end, { buffer = bufnr, desc = "Format File" })
+end, { desc = "Format File" })
 
 -- TreeSitter
 vim.keymap.set("n", "<leader>tp", "<CMD>TSPlaygroundToggle<CR>")
@@ -125,3 +124,24 @@ vim.keymap.set(
 require("mini.pick").setup()
 keymap.set("n", "<leader>md", "<CMD>lua MiniExtra.pickers.diagnostic()<CR>", { desc = "Open Mini" })
 keymap.set("n", "<leader>mf", "<CMD>lua MiniPick.builtin.files()<CR>", { desc = "Open Mini" })
+
+-- Fzf
+keymap.set("n", "<leader>ff", "<CMD>lua require('fzf-lua').files()<CR>", { desc = "Open Fzf Files" })
+-- Remove when if you want to use telescope
+keymap.set("n", "<leader>k", "<CMD>FzfLua keymaps<CR>", { desc = "Keymaps With FzfLua" })
+keymap.set("n", "<leader>fwa", "<CMD>FzfLua grep_cWORD<CR>", { desc = "Find Word Current Word" })
+-- keymap.set("n", "<leader>fwc", "<CMD>FzfLua grep_curbuf<CR>", { desc = "Find Word in Current Buffer with FzfLua" })
+keymap.set("n", "<leader>fs", "<CMD>FzfLua live_grep_native<CR>", { desc = "Find Word in Current Buffer with FzfLua" })
+keymap.set("n", "<leader>fc", "<CMD>FzfLua commands<CR>", { desc = "Find Commands" })
+keymap.set("n", "<leader>fd", "<CMD>FzfLua diagnostics<CR>", { desc = "Find Diagnostics" })
+keymap.set("n", "<leader>tr", "<CMD>FzfLua resume<CR>", { desc = "Resume Last FzfLua action" })
+keymap.set("n", "<leader>th", "<CMD>FzfLua colorschemes<CR>", { desc = "Resume Last FzfLua action" })
+
+-- Noice
+vim.keymap.set({ "n", "i", "s" }, "<c-f>", function()
+	if not require("noice.lsp").scroll(4) then return "<c-f>" end
+end, { desc = "Scroll Down Lsp Documentation", silent = true, expr = true })
+
+vim.keymap.set({ "n", "i", "s" }, "<c-b>", function()
+	if not require("noice.lsp").scroll(-4) then return "<c-b>" end
+end, { desc = "Scroll Up Lsp Documentation", silent = true, expr = true })
