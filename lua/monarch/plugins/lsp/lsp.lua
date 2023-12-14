@@ -1,10 +1,32 @@
 local lsp = require "lsp-zero"
 local lsp_config = require "lspconfig"
 local lsp_format = require "lsp-format"
+local cmp_nvim_lsp = require "cmp_nvim_lsp"
 
 lsp_format.setup {}
 lsp_config.lua_ls.setup { on_attach = lsp_format.on_attach }
 lsp_config.dartls.setup { on_attach = lsp_format.on_attach }
+
+lsp_config.clangd.setup {
+	capabilities = cmp_nvim_lsp.default_capabilities(),
+	cmd = {
+		"clangd",
+		"--offset-encoding=utf-16",
+	},
+}
+
+lsp_config.omnisharp.setup {
+	cmd = {
+		"dotnet",
+		"/home/monarch/.local/share/nvim/mason/packages/omnisharp/libexec/OmniSharp.dll",
+	},
+	enable_editorconfig_support = true,
+	enable_roslyn_analysers = false,
+	enable_import_completion = true,
+	organize_imports_on_format = true,
+	filetypes = { "cs", "vb", "csproj", "sln", "slnx", "props" },
+	analyze_open_documents_only = false,
+}
 
 -- lsp_config.pyright.setup {
 -- 	settings = {
@@ -13,32 +35,6 @@ lsp_config.dartls.setup { on_attach = lsp_format.on_attach }
 -- 		},
 -- 	},
 -- }
-
-lsp_config.pylsp.setup {
-	settings = {
-		pylsp = {
-			plugins = {
-				-- formatter options
-				-- black = { enabled = true },
-				-- autopep8 = { enabled = false },
-				-- yapf = { enabled = false },
-				-- -- linter options
-				-- pylint = { enabled = true, executable = "pylint" },
-				-- pyflakes = { enabled = false },
-				-- pycodestyle = { enabled = false },
-				-- -- type checker
-				-- pylsp_mypy = { enabled = true },
-				-- -- auto-completion options
-				-- jedi_completion = { fuzzy = true },
-				-- -- import sorting
-				-- pyls_isort = { enabled = true },
-			},
-		},
-	},
-	flags = {
-		debounce_text_changes = 200,
-	},
-}
 
 require("neodev").setup {
 	library = { plugins = { "nvim-dap-ui" }, types = true },
@@ -71,6 +67,8 @@ lsp_config.tsserver.setup {
 		},
 	},
 }
+
+lsp_config.jdtls.setup {}
 
 lsp.configure("intelephense", {
 	settings = {

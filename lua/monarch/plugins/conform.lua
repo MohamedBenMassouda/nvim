@@ -10,6 +10,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 conform.setup {
 	formatters_by_ft = {
 		lua = { "stylua" },
+		cs = { "csharpier" },
 		-- Conform will run multiple formatters sequentially
 		python = { "isort", "black" },
 		-- Use a sub-list to run only the first available formatter
