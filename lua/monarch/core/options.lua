@@ -13,6 +13,7 @@ opt.autoindent = true
 -- For dart files set tabstop and shiftwidth to 2
 vim.cmd "autocmd BufNewFile,BufRead *.dart setlocal tabstop=2 shiftwidth=2"
 vim.cmd "autocmd BufNewFile,BufRead *.tsx setlocal tabstop=2 shiftwidth=2"
+vim.cmd "autocmd BufNewFile,BufRead *.ts setlocal tabstop=2 shiftwidth=2"
 vim.cmd "autocmd BufNewFile,BufRead *.json setlocal tabstop=2 shiftwidth=2"
 vim.cmd "autocmd BufNewFile,BufRead *.js setlocal tabstop=2 shiftwidth=2"
 vim.cmd "autocmd BufNewFile,BufRead *.css setlocal tabstop=2 shiftwidth=2"
@@ -43,3 +44,12 @@ opt.splitbelow = true
 -- UndoTree
 opt.undodir = os.getenv "HOME" .. "/.vim/undodir"
 opt.undofile = true
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+    group = vim.api.nvim_create_augroup('highlight_yank', {}),
+    desc = 'Hightlight selection on yank',
+    pattern = '*',
+    callback = function()
+        vim.highlight.on_yank { higroup = 'IncSearch' }
+    end,
+})

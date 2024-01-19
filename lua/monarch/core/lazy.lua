@@ -207,9 +207,9 @@ local plugins = {
 					"python",
 					"tsx",
 					"go",
-					"query",
-					"vim",
-					"vimdoc",
+					-- "query",
+					-- "vim",
+					-- "vimdoc",
 				},
 
 				-- Install parsers synchronously (only applied to `ensure_installed`)
@@ -271,6 +271,7 @@ local plugins = {
 			{ "saadparwaiz1/cmp_luasnip" },
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "hrsh7th/cmp-nvim-lua" },
+			{ "rcarriga/cmp-dap" },
 
 			-- Snippets
 			{ "L3MON4D3/LuaSnip" },
@@ -311,8 +312,16 @@ local plugins = {
 			"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
 		},
+		opts = {
+			background_colour = "#000000",
+		},
+		config = function(_, opts)
+			require("notify").setup(vim.tbl_extend("keep", {
+				-- other stuff
+				background_colour = "#000000",
+			}, opts))
+		end,
 	},
-
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
@@ -325,7 +334,6 @@ local plugins = {
 		"echasnovski/mini.cursorword",
 		dependencies = {
 			"echasnovski/mini.surround",
-			"echasnovski/mini.move",
 			"echasnovski/mini.extra",
 			"echasnovski/mini.pick",
 		},
@@ -333,7 +341,6 @@ local plugins = {
 		config = function()
 			require("mini.cursorword").setup()
 			require("mini.surround").setup()
-			require("mini.move").setup()
 			require("mini.extra").setup()
 		end,
 	},
@@ -402,147 +409,6 @@ local plugins = {
 		end,
 	},
 	{
-		"ziontee113/SelectEase",
-		config = function()
-			local select_ease = require "SelectEase"
-
-			-- For more language support check the `Queries` section
-			local lua_query = [[
-            ;; query
-            ((identifier) @cap)
-            ((string_content) @cap)
-            ((true) @cap)
-            ((false) @cap)
-            ]]
-			local python_query = [[
-            ;; query
-            ((identifier) @cap)
-            ((string) @cap)
-            ]]
-
-			local queries = {
-				lua = lua_query,
-				python = python_query,
-			}
-
-			vim.keymap.set({ "n", "s", "i" }, "<C-A-k>", function()
-				select_ease.select_node {
-					queries = queries,
-					direction = "previous",
-					vertical_drill_jump = true,
-					-- visual_mode = true, -- if you want Visual Mode instead of Select Mode
-					fallback = function()
-						-- if there's no target, this function will be called
-						select_ease.select_node { queries = queries, direction = "previous" }
-					end,
-				}
-			end, {})
-			vim.keymap.set({ "n", "s", "i" }, "<C-A-j>", function()
-				select_ease.select_node {
-					queries = queries,
-					direction = "next",
-					vertical_drill_jump = true,
-					-- visual_mode = true, -- if you want Visual Mode instead of Select Mode
-					fallback = function()
-						-- if there's no target, this function will be called
-						select_ease.select_node { queries = queries, direction = "next" }
-					end,
-				}
-			end, {})
-
-			vim.keymap.set({ "n", "s", "i" }, "<C-A-h>", function()
-				select_ease.select_node {
-					queries = queries,
-					direction = "previous",
-					current_line_only = true,
-					-- visual_mode = true, -- if you want Visual Mode instead of Select Mode
-				}
-			end, {})
-			vim.keymap.set({ "n", "s", "i" }, "<C-A-l>", function()
-				select_ease.select_node {
-					queries = queries,
-					direction = "next",
-					current_line_only = true,
-					-- visual_mode = true, -- if you want Visual Mode instead of Select Mode
-				}
-			end, {})
-
-			-- previous / next node that matches query
-			vim.keymap.set(
-				{ "n", "s", "i" },
-				"<C-a>",
-				function() select_ease.select_node { queries = queries, direction = "previous" } end,
-				{}
-			)
-			vim.keymap.set(
-				{ "n", "s", "i" },
-				"<C-A-n>",
-				function() select_ease.select_node { queries = queries, direction = "next" } end,
-				{}
-			)
-
-			-- Swap Nodes
-			vim.keymap.set({ "n", "s", "i" }, "<C-A-S-k>", function()
-				select_ease.swap_nodes {
-					queries = queries,
-					direction = "previous",
-					vertical_drill_jump = true,
-
-					-- swap_in_place option. Default behavior is cursor will jump to target after the swap
-					-- jump_to_target_after_swap = false --> this will keep cursor in place after the swap
-				}
-			end, {})
-			vim.keymap.set(
-				{ "n", "s", "i" },
-				"<C-A-S-j>",
-				function()
-					select_ease.swap_nodes {
-						queries = queries,
-						direction = "next",
-						vertical_drill_jump = true,
-					}
-				end,
-				{}
-			)
-			vim.keymap.set(
-				{ "n", "s", "i" },
-				"<C-A-S-h>",
-				function()
-					select_ease.swap_nodes {
-						queries = queries,
-						direction = "previous",
-						current_line_only = true,
-					}
-				end,
-				{}
-			)
-			vim.keymap.set(
-				{ "n", "s", "i" },
-				"<C-A-S-l>",
-				function()
-					select_ease.swap_nodes {
-						queries = queries,
-						direction = "next",
-						current_line_only = true,
-					}
-				end,
-				{}
-			)
-			vim.keymap.set(
-				{ "n", "s", "i" },
-				"<C-A-S-p>",
-				function() select_ease.swap_nodes { queries = queries, direction = "previous" } end,
-				{}
-			)
-			vim.keymap.set(
-				{ "n", "s", "i" },
-				"<C-A-S-n>",
-				function() select_ease.swap_nodes { queries = queries, direction = "next" } end,
-				{}
-			)
-		end,
-	},
-	{
 		"brenoprata10/nvim-highlight-colors",
 		config = function() require("nvim-highlight-colors").setup {} end,
 	},
@@ -557,6 +423,8 @@ local plugins = {
 	{
 		"simrat39/rust-tools.nvim",
 		ft = { "rust" },
+		opt = {},
+		config = function() require("rust-tools").inlay_hints.enable() end,
 	},
 	{
 		"saecki/crates.nvim",
@@ -582,11 +450,11 @@ local plugins = {
 		"ThePrimeagen/harpoon",
 	},
 	-- Color Picker
-	{
-		"ziontee113/color-picker.nvim",
-		config = function() require("color-picker").setup {} end,
-		ft = { "css", "ts", "tsx", "jsx", "dart" },
-	},
+	-- {
+	--     "ziontee113/color-picker.nvim",
+	--     config = function() require("color-picker").setup {} end,
+	--     ft = { "css", "ts", "tsx", "jsx", "dart" },
+	-- },
 	{
 		"nvim-treesitter/nvim-treesitter-context",
 		config = function()
@@ -607,9 +475,6 @@ local plugins = {
 		end,
 	},
 	{
-		"RRethy/nvim-base16",
-	},
-	{
 		"ibhagwan/fzf-lua",
 	},
 	{
@@ -622,9 +487,6 @@ local plugins = {
 				},
 			},
 		},
-	},
-	{
-		"ThePrimeagen/vim-be-good",
 	},
 	{
 		"nvim-java/nvim-java",
@@ -647,6 +509,24 @@ local plugins = {
 			},
 		},
 		config = function() require("java").setup() end,
+	},
+	{
+		"ggandor/leap.nvim",
+		config = function() require("leap").add_default_mappings() end,
+	},
+	{
+		"Hoffs/omnisharp-extended-lsp.nvim",
+		lazy = true,
+		ft = { "cs" },
+	},
+	{
+		"tiagovla/tokyodark.nvim",
+		opts = {},
+		config = function(_, opts)
+			require("tokyodark").setup {
+				transparent_background = true,
+			}
+		end,
 	},
 }
 

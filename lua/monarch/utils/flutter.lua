@@ -117,6 +117,11 @@ function M.flutter_commands()
 					if value.label == selected[1] then value.command() end
 				end
 			end,
+			["ctrl-enter"] = function(selected, opts)
+				for _, value in pairs(cmds) do
+					if value.label == selected[1] then value.command() end
+				end
+			end,
 			["ctrl-y"] = function(selected, opts)
 				for _, value in pairs(cmds) do
 					if value.label == selected[1] then value.command() end

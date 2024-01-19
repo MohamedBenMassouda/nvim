@@ -13,6 +13,7 @@ require("catppuccin").setup {
 	},
 	integrations = {
 		noice = true,
+		fidget = true,
 		cmp = true,
 		gitsigns = true,
 		nvimtree = true,
@@ -28,7 +29,6 @@ require("catppuccin").setup {
 
 -- setup must be called before loading
 vim.cmd.colorscheme "catppuccin"
-
 local M = require "monarch.utils.colors"
 
 for hl, col in pairs(M.change_catpuccin_treesitter_colors()) do

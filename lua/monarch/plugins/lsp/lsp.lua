@@ -5,7 +5,22 @@ local cmp_nvim_lsp = require "cmp_nvim_lsp"
 
 lsp_format.setup {}
 lsp_config.lua_ls.setup { on_attach = lsp_format.on_attach }
-lsp_config.dartls.setup { on_attach = lsp_format.on_attach }
+
+-- Leave commented if the dart vim plugin is installed
+-- lsp_config.dartls.setup { on_attach = lsp_format.on_attach,
+--     settings = {
+--         dart = {
+--             analysisExcludedFolders = {
+--                 vim.fn.expand("$HOME/.pub-cache/"),
+--                 vim.fn.expand("$HOME/Development/flutter/"),
+--                 vim.fn.expand("./.dart_tool/"),
+--                 vim.fn.expand("./.dart_tool/**"),
+--             }
+--         }
+--     }
+-- }
+
+require("lspconfig").kotlin_language_server.setup {}
 
 lsp_config.clangd.setup {
 	capabilities = cmp_nvim_lsp.default_capabilities(),
@@ -16,15 +31,23 @@ lsp_config.clangd.setup {
 }
 
 lsp_config.omnisharp.setup {
+	handlers = {
+		["textDocument/definition"] = function(...) return require("omnisharp_extended").handler(...) end,
+	},
+	keys = {
+		{
+			"gd",
+			function() require("omnisharp_extended").lsp_definitons() end,
+		},
+	},
 	cmd = {
 		"dotnet",
 		"/home/monarch/.local/share/nvim/mason/packages/omnisharp/libexec/OmniSharp.dll",
 	},
-	enable_editorconfig_support = true,
-	enable_roslyn_analysers = false,
+	-- enable_editorconfig_support = true,
+	enable_roslyn_analysers = true,
 	enable_import_completion = true,
-	organize_imports_on_format = true,
-	filetypes = { "cs", "vb", "csproj", "sln", "slnx", "props" },
+	-- filetypes = { "cs", "vb", "csproj", "sln", "slnx", "props" },
 	analyze_open_documents_only = false,
 }
 
@@ -101,7 +124,7 @@ lsp.set_preferences {
 lsp.set_sign_icons {
 	error = "✘",
 	warn = "▲",
-	hint = "",
+	hint = "󱌴",
 	info = "",
 }
 

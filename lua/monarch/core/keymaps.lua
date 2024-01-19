@@ -2,7 +2,8 @@ vim.g.mapleader = " "
 local keymap = vim.keymap
 
 keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Vim Explorer" })
-keymap.set("v", "J", "m '>+1<CR>gv=gv'", { desc = "No Highlight" })
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 keymap.set("n", "<C-s>", function() vim.cmd "w" end, { desc = "Save File" })
 keymap.set("n", "<C-q>", "<CMD>q<CR>", { desc = "Quit" })
 
@@ -10,8 +11,8 @@ keymap.set("n", "<leader>y", '"+yy', { desc = "Copy to Clipboard" })
 keymap.set("v", "<leader>y", '"+y', { desc = "Copy to Clipboard" })
 
 keymap.set("n", "x", '"_x"')
-keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment current number" })
-keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement current number" })
+-- keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment current number" })
+-- keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement current number" })
 
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split Window Vertically" }) -- Split Window Vertically
 keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split Window Horizontally" }) -- Split Window Horizontally
