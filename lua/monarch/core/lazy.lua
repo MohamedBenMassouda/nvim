@@ -283,9 +283,6 @@ local plugins = {
 			-- Lsp Diagnostics
 			{ "folke/trouble.nvim" },
 
-			-- Lsp Signature
-			{ "ray-x/lsp_signature.nvim" },
-
 			-- Lsp kind
 			{
 				"onsails/lspkind-nvim",
@@ -372,9 +369,9 @@ local plugins = {
 			})
 		end,
 	},
-	{
-		"dart-lang/dart-vim-plugin",
-	},
+	-- {
+	-- 	"dart-lang/dart-vim-plugin",
+	-- },
 	-- Git Blame Messages
 	{
 		"rhysd/git-messenger.vim",
@@ -527,6 +524,13 @@ local plugins = {
 				transparent_background = true,
 			}
 		end,
+	},
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		build = "cd app && yarn install",
+		init = function() vim.g.mkdp_filetypes = { "markdown" } end,
+		ft = { "markdown" },
 	},
 }
 

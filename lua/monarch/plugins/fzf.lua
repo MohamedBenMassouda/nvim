@@ -16,7 +16,6 @@ local ignore = {
 }
 
 require("fzf-lua").setup {
-	"telescope",
 	file_ignore_patterns = ignore,
 	-- winopts = {
 	-- 	preview = { default = "bat" },
