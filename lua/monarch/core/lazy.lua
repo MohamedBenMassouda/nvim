@@ -111,60 +111,6 @@ local plugins = {
 	{
 		"kyazdani42/nvim-web-devicons",
 	},
-	-- {
-	-- 	"nvim-tree/nvim-tree.lua",
-	-- 	lazy = false,
-	-- 	config = function()
-	-- 	    vim.g.loaded_netrw = 1
-	-- 	    vim.g.loaded_netrwPlugin = 1
-	--
-	-- 	    -- set termguicolors to enable highlight groups
-	-- 	    vim.opt.termguicolors = true
-	--
-	--
-	-- 	    -- OR setup with some options
-	-- 	    require("nvim-tree").setup({
-	-- 	        sort_by = "case_sensitive",
-	-- 	        view = {
-	-- 	            width = 30,
-	-- 	            float = {
-	-- 	                enable = true,
-	-- 	                quit_on_focus_loss = true,
-	-- 	                open_win_config ={
-	-- 	                    relative = "editor",
-	-- 	                    border = "rounded",
-	-- 	                    width = 30,
-	-- 	                    height = 30,
-	-- 	                    row = 1,
-	-- 	                    col = 1,
-	-- 	                }
-	-- 	            },
-	-- 	        },
-	-- 	        renderer = {
-	-- 	            group_empty = true,
-	-- 	        },
-	-- 	        filters = {
-	-- 	            dotfiles = true,
-	-- 	        },
-	-- 	        diagnostics = {
-	-- 	            enable = true,
-	-- 	            show_on_dirs = true,
-	-- 	            show_on_open_dirs = false,
-	-- 	            debounce_delay = 50,
-	-- 	            severity = {
-	-- 	                min = vim.diagnostic.severity.HINT,
-	-- 	                max = vim.diagnostic.severity.ERROR,
-	-- 	            },
-	-- 	            icons = {
-	-- 	                hint = "",
-	-- 	                info = "",
-	-- 	                warning = "",
-	-- 	                error = "",
-	-- 	            },
-	-- 	        },
-	-- 	    })
-	-- 	end
-	-- },
 	{
 		-- Status Line
 		"nvim-lualine/lualine.nvim",
@@ -207,9 +153,9 @@ local plugins = {
 					"python",
 					"tsx",
 					"go",
-					-- "query",
-					-- "vim",
-					-- "vimdoc",
+					"query",
+					"vim",
+					"vimdoc",
 				},
 
 				-- Install parsers synchronously (only applied to `ensure_installed`)
@@ -288,6 +234,13 @@ local plugins = {
 				"onsails/lspkind-nvim",
 				config = function() require("lspkind").init() end,
 			},
+
+			-- Lsp Usage
+			{
+				"Wansmer/symbol-usage.nvim",
+				event = { "BufReadPre", "LspAttach" }, -- need run before LspAttach if you use nvim 0.9. On 0.10 use 'LspAttach'
+				config = function() require("symbol-usage").setup() end,
+			},
 		},
 	},
 	{
@@ -328,16 +281,25 @@ local plugins = {
 	},
 
 	{
+		"HiPhish/rainbow-delimiters.nvim",
+		config = function()
+			require("rainbow-delimiters.setup").setup {
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			}
+		end,
+	},
+
+	{
 		"echasnovski/mini.cursorword",
 		dependencies = {
-			"echasnovski/mini.surround",
 			"echasnovski/mini.extra",
 			"echasnovski/mini.pick",
 		},
 		version = false,
 		config = function()
 			require("mini.cursorword").setup()
-			require("mini.surround").setup()
 			require("mini.extra").setup()
 		end,
 	},
@@ -417,21 +379,21 @@ local plugins = {
 		config = function() vim.g.matchup_matchparen_offscreen = { method = "popup" } end,
 	},
 	-- Rust
-	{
-		"simrat39/rust-tools.nvim",
-		ft = { "rust" },
-		opt = {},
-		config = function() require("rust-tools").inlay_hints.enable() end,
-	},
-	{
-		"saecki/crates.nvim",
-		tag = "v0.4.0",
-		ft = { "rust", "toml" },
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		config = function() require("crates").setup() end,
-	},
+	-- {
+	-- 	"simrat39/rust-tools.nvim",
+	-- 	ft = { "rust" },
+	-- 	opt = {},
+	-- 	config = function() require("rust-tools").inlay_hints.enable() end,
+	-- },
+	-- {
+	-- 	"saecki/crates.nvim",
+	-- 	tag = "v0.4.0",
+	-- 	ft = { "rust", "toml" },
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 	},
+	-- 	config = function() require("crates").setup() end,
+	-- },
 	{
 		"stevearc/conform.nvim",
 		event = { "BufReadPre", "BufNewFile" },

@@ -20,7 +20,9 @@ lsp_config.lua_ls.setup { on_attach = lsp_format.on_attach }
 --     }
 -- }
 
-require("lspconfig").kotlin_language_server.setup {}
+lsp_config.sqls.setup {
+	on_attach = function(client, bufnr) require("sqls").on_attach(client, bufnr) end,
+}
 
 lsp_config.clangd.setup {
 	capabilities = cmp_nvim_lsp.default_capabilities(),

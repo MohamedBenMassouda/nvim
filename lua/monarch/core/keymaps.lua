@@ -125,6 +125,7 @@ vim.keymap.set(
 require("mini.pick").setup()
 keymap.set("n", "<leader>md", "<CMD>lua MiniExtra.pickers.diagnostic()<CR>", { desc = "Open Mini" })
 keymap.set("n", "<leader>mf", "<CMD>lua MiniPick.builtin.files()<CR>", { desc = "Open Mini" })
+keymap.set("n", "<leader>me", "<CMD>lua MiniExtra.pickers.explorer()<CR>", { desc = "Open Mini Explorer" })
 
 -- Fzf
 keymap.set("n", "<leader>ff", "<CMD>lua require('fzf-lua').files()<CR>", { desc = "Open Fzf Files" })
@@ -146,3 +147,19 @@ end, { desc = "Scroll Down Lsp Documentation", silent = true, expr = true })
 vim.keymap.set({ "n", "i", "s" }, "<c-b>", function()
 	if not require("noice.lsp").scroll(-4) then return "<c-b>" end
 end, { desc = "Scroll Up Lsp Documentation", silent = true, expr = true })
+
+-- Toggle bool values
+
+vim.keymap.set("n", "<leader>tb", function()
+	local line = vim.api.nvim_get_current_line()
+
+	if line:match "true" then
+		local new_line = line:gsub("true", "false")
+		vim.api.nvim_set_current_line(new_line)
+	end
+
+	if line:match "false" then
+		local new_line = line:gsub("false", "true")
+		vim.api.nvim_set_current_line(new_line)
+	end
+end, { desc = "Toggle Boolean Values" })
