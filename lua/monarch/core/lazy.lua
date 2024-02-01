@@ -407,6 +407,10 @@ local plugins = {
 	},
 	{
 		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		dependencies = {
+			{ "nvim-lua/plenary.nvim" },
+		},
 	},
 	-- Color Picker
 	-- {
@@ -493,6 +497,9 @@ local plugins = {
 		build = "cd app && yarn install",
 		init = function() vim.g.mkdp_filetypes = { "markdown" } end,
 		ft = { "markdown" },
+	},
+	{
+		"tpope/vim-sleuth",
 	},
 }
 

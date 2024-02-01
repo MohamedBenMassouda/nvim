@@ -163,3 +163,12 @@ vim.keymap.set("n", "<leader>tb", function()
 		vim.api.nvim_set_current_line(new_line)
 	end
 end, { desc = "Toggle Boolean Values" })
+
+-- Really awesome command for searching and replacing in the whole file
+-- %s/\v(\w+)\[\]/ArrayList<\1>
+-- %s used to search in the whole file
+-- \v is used to use very magic
+-- (\w+) is used to capture the word
+-- \[\] is used to capture the brackets
+-- ArrayList<\1> is used to replace the word with ArrayList<word>
+-- \1 is used to use the first capture group
