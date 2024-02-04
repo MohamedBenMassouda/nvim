@@ -8,18 +8,13 @@ if not luasnip_status then return end
 
 local lspkind = require "lspkind"
 
-require("luasnip").filetype_extend("javascriptreact", { "html" })
-require("luasnip").filetype_extend("typescriptreact", { "html" })
-require("luasnip").filetype_extend("php", { "html" })
--- load vs-code like snippets from plugins (e.g. friendly-snippets)
-require("luasnip.loaders.from_vscode").lazy_load()
-
 vim.opt.completeopt = "menu,menuone,noselect"
 
 lspkind.init {
-	-- symbol_map = {
-	--     Copilot = "",
-	-- },
+	symbol_map = {
+		-- Copilot = "",
+		Snippet = "",
+	},
 }
 
 cmp.setup {
@@ -73,16 +68,3 @@ cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
 -- If you want insert `(` after select function or method item
 local cmp_autopairs = require "nvim-autopairs.completion.cmp"
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-
-luasnip.config.set_config {
-	history = true,
-	enable_autosnippets = true,
-}
-
-vim.keymap.set({ "i" }, "<C-K>", function() luasnip.expand() end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<C-L>", function() luasnip.jump(1) end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<C-J>", function() luasnip.jump(-1) end, { silent = true })
-
-vim.keymap.set({ "i", "s" }, "<C-E>", function()
-	if luasnip.choice_active() then luasnip.change_choice(1) end
-end, { silent = true })

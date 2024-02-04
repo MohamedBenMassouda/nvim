@@ -172,3 +172,6 @@ end, { desc = "Toggle Boolean Values" })
 -- \[\] is used to capture the brackets
 -- ArrayList<\1> is used to replace the word with ArrayList<word>
 -- \1 is used to use the first capture group
+
+-- Noice
+vim.keymap.set("n", "<leader>nd", "<CMD>Noice dismiss<CR>", { desc = "Open Noice Dismiss" })
