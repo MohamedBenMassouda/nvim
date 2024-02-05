@@ -20,6 +20,10 @@ local function toggle_telescope()
 				content = vim.fn.substitute(content, "\\^M", "\r", "g")
 				content = vim.fn.substitute(content, "\\^I", "\t", "g")
 
+				text = vim.fn.substitute(text, "\\^J", "", "g")
+				text = vim.fn.substitute(text, "\\^M", "", "g")
+				text = vim.fn.substitute(text, "\\^I", "", "g")
+
 				if content ~= "" then
 					-- If the content is empty, don't add it to the history
 					-- This is useful for the black hole register
