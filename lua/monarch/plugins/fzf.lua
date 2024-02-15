@@ -1,4 +1,5 @@
 local ignore = {
+	"**/*.class/*",
 	"node_modules",
 	".git",
 	".dart_tool",

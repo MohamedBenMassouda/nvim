@@ -4,13 +4,18 @@ local harpoon = require "harpoon"
 harpoon:setup()
 -- REQUIRED
 
-vim.keymap.set("n", "<leader>hm", function() harpoon:list():append() end)
-vim.keymap.set("n", "<leader>hu", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set("n", "<leader>hm", function() harpoon:list():append() end, { desc = "Harpoon Mark" })
+vim.keymap.set(
+	"n",
+	"<leader>hu",
+	function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
+	{ desc = "Harpoon List" }
+)
 
-vim.keymap.set("n", "<leader>&", function() harpoon:list():select(1) end)
-vim.keymap.set("n", "<leader>é", function() harpoon:list():select(2) end)
-vim.keymap.set("n", '<leader>"', function() harpoon:list():select(3) end)
-vim.keymap.set("n", "<leader>'", function() harpoon:list():select(4) end)
+vim.keymap.set("n", "<leader>&", function() harpoon:list():select(1) end, { desc = "Navigate to Harpoon File 1" })
+vim.keymap.set("n", "<leader>é", function() harpoon:list():select(2) end, { desc = "Navigate to Harpoon File 2" })
+vim.keymap.set("n", '<leader>"', function() harpoon:list():select(3) end, { desc = "Navigate to Harpoon File 3" })
+vim.keymap.set("n", "<leader>'", function() harpoon:list():select(4) end, { desc = "Navigate to Harpoon File 4" })
 
 -- basic telescope configuration
 local conf = require("telescope.config").values

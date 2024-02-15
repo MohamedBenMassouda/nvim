@@ -39,18 +39,13 @@ lsp_config.omnisharp.setup {
 	keys = {
 		{
 			"gd",
-			function() require("omnisharp_extended").lsp_definitons() end,
+			function() require("omnisharp_extended").telescope_lsp_definitions() end,
+			desc = "Goto Definition",
 		},
 	},
-	cmd = {
-		"dotnet",
-		"/home/monarch/.local/share/nvim/mason/packages/omnisharp/libexec/OmniSharp.dll",
-	},
-	-- enable_editorconfig_support = true,
-	enable_roslyn_analysers = true,
+	enable_roslyn_analyzers = true,
+	organize_imports_on_format = true,
 	enable_import_completion = true,
-	-- filetypes = { "cs", "vb", "csproj", "sln", "slnx", "props" },
-	analyze_open_documents_only = false,
 }
 
 -- lsp_config.pyright.setup {

@@ -1,4 +1,6 @@
-local function toggle_telescope()
+local M = {}
+
+function M.yank_history_telescope()
 	local yanks = vim.fn.execute "registers"
 
 	local lines = vim.split(yanks, "\n")
@@ -83,4 +85,4 @@ local function toggle_telescope()
 		:find()
 end
 
-vim.keymap.set("n", "<leader>yy", toggle_telescope, { noremap = true, silent = true })
+return M

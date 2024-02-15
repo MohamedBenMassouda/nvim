@@ -501,6 +501,17 @@ local plugins = {
 	{
 		"tpope/vim-sleuth",
 	},
+	{
+		"NeogitOrg/neogit",
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- required
+			"sindrets/diffview.nvim", -- optional - Diff integration
+
+			-- Only one of these is needed, not both.
+			"ibhagwan/fzf-lua", -- optional
+		},
+		config = true,
+	},
 }
 
 require("lazy").setup(plugins)

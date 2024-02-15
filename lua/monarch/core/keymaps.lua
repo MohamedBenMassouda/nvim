@@ -175,3 +175,11 @@ end, { desc = "Toggle Boolean Values" })
 
 -- Noice
 vim.keymap.set("n", "<leader>nd", "<CMD>Noice dismiss<CR>", { desc = "Open Noice Dismiss" })
+
+-- Personal
+vim.keymap.set(
+	"n",
+	"<leader>fy",
+	require("monarch.utils.yank").yank_history_telescope,
+	{ noremap = true, silent = true, desc = "Yank history" }
+)

@@ -1,6 +1,12 @@
 local wk = require "which-key"
 
 wk.register({
+	c = {
+		name = "Lsp Action",
+	},
+	g = {
+		name = "Git Actions",
+	},
 	f = {
 		name = "FzfLua", -- optional group name
 	},
