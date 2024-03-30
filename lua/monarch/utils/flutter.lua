@@ -123,7 +123,6 @@ function M.flutter_commands()
 				end
 			end,
 		},
-		complete = true,
 		winopts = {
 			height = 0.4,
 			width = 0.4,

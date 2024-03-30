@@ -14,6 +14,7 @@ local ignore = {
 	"linux",
 	"web",
 	"ios",
+	"android",
 }
 
 require("fzf-lua").setup {

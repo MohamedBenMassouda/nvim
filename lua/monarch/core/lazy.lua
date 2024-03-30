@@ -25,6 +25,7 @@ local plugins = {
 	{
 		"rcarriga/nvim-dap-ui",
 		dependencies = {
+			"nvim-neotest/nvim-nio",
 			"mfussenegger/nvim-dap",
 			"theHamsta/nvim-dap-virtual-text",
 			"jay-babu/mason-nvim-dap.nvim",
@@ -136,6 +137,14 @@ local plugins = {
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
 			require("nvim-treesitter.install").prefer_git = true
+			local parser = require("nvim-treesitter.parsers").get_parser_configs()
+			parser.dart = {
+				install_info = {
+					url = "https://github.com/UserNobody14/tree-sitter-dart",
+					files = { "src/parser.c", "src/scanner.c" },
+					revision = "8aa8ab977647da2d4dcfb8c4726341bee26fbce4", -- The last commit before the snail speed
+				},
+			}
 			require("nvim-treesitter.configs").setup {
 				autotag = {
 					enable = true,
@@ -176,24 +185,6 @@ local plugins = {
 				indent = {
 					enable = true,
 					disable = { "dart", "python" },
-				},
-				playground = {
-					enable = true,
-					disable = {},
-					updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-					persist_queries = false, -- Whether the query persists across vim sessions
-					keybindings = {
-						toggle_query_editor = "o",
-						toggle_hl_groups = "i",
-						toggle_injected_languages = "t",
-						toggle_anonymous_nodes = "a",
-						toggle_language_display = "I",
-						focus_language = "f",
-						unfocus_language = "F",
-						update = "R",
-						goto_node = "<cr>",
-						show_help = "?",
-					},
 				},
 			}
 		end,
@@ -243,6 +234,9 @@ local plugins = {
 			},
 		},
 	},
+
+	{ "nvim-lua/plenary.nvim" },
+	{ "stevearc/dressing.nvim" }, -- optional for vim.ui.select
 	{
 		"akinsho/flutter-tools.nvim",
 		lazy = false,
@@ -403,9 +397,6 @@ local plugins = {
 		"mfussenegger/nvim-lint",
 	},
 	{
-		"nvim-treesitter/playground",
-	},
-	{
 		"ThePrimeagen/harpoon",
 		branch = "harpoon2",
 		dependencies = {
@@ -511,6 +502,15 @@ local plugins = {
 			"ibhagwan/fzf-lua", -- optional
 		},
 		config = true,
+	},
+	{
+		"AckslD/nvim-neoclip.lua",
+		dependencies = {
+			-- you'll need at least one of these
+			-- {'nvim-telescope/telescope.nvim'},
+			{ "ibhagwan/fzf-lua" },
+		},
+		config = function() require("neoclip").setup() end,
 	},
 }
 
