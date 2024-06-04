@@ -16,10 +16,12 @@ conform.setup {
 		-- Use a sub-list to run only the first available formatter
 		javascript = { { "prettierd", "prettier" } },
 		typescript = { { "prettierd", "prettier" } },
-		typescriptreact = { { "prettierd", "prettier" } },
+		javascriptreact = { "prettierd" },
+		typescriptreact = { { "prettierd" } },
 		css = { "prettier" },
 		json = { "prettier" },
 		html = { "prettier" },
+		java = { "google-java-format" },
 	},
 	-- format_on_save = function(bufnr)
 	-- 	-- Disable with a global or buffer-local variable

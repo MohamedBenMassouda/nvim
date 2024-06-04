@@ -30,10 +30,6 @@ require("telescope").setup {
 			hidden_files = true,
 			theme = "dropdown",
 		},
-		file_browser = {
-			hidden_files = true,
-			theme = "dropdown",
-		},
 	},
 	pickers = {
 		grep_string = {
@@ -92,12 +88,9 @@ require("telescope").setup {
 -- 	{ desc = "Find Word Live" }
 -- )
 
-require("telescope").load_extension "file_browser"
 -- How to use project telescope
 -- c to create project with the current directory
 -- d to delete a project
-
-vim.api.nvim_set_keymap("n", "<leader>fp", "<CMD>Telescope file_browser<CR>", { desc = "Browse Files With Telescope" })
 
 require("telescope-lsp-handlers").setup {
 	reference = {

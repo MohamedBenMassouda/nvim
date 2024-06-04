@@ -123,9 +123,10 @@ vim.keymap.set(
 
 -- Mini
 require("mini.pick").setup()
-keymap.set("n", "<leader>md", "<CMD>lua MiniExtra.pickers.diagnostic()<CR>", { desc = "Open Mini" })
+-- keymap.set("n", "<leader>md", "<CMD>lua MiniExtra.pickers.diagnostic()<CR>", { desc = "Open Mini" })
 keymap.set("n", "<leader>mf", "<CMD>lua MiniPick.builtin.files()<CR>", { desc = "Open Mini" })
 keymap.set("n", "<leader>me", "<CMD>lua MiniExtra.pickers.explorer()<CR>", { desc = "Open Mini Explorer" })
+keymap.set("n", "<leader>md", "<CMD>lua MiniFiles.open()<CR>", { desc = "Open Files Explorer" })
 
 -- Fzf
 keymap.set("n", "<leader>ff", "<CMD>lua require('fzf-lua').files()<CR>", { desc = "Open Fzf Files" })
@@ -177,9 +178,20 @@ end, { desc = "Toggle Boolean Values" })
 vim.keymap.set("n", "<leader>nd", "<CMD>Noice dismiss<CR>", { desc = "Open Noice Dismiss" })
 
 -- Personal
+-- vim.keymap.set(
+-- 	"n",
+-- 	"<leader>fy",
+-- 	require("monarch.utils.yank").yank_history_telescope,
+-- 	{ noremap = true, silent = true, desc = "Yank history" }
+-- )
+
 vim.keymap.set(
 	"n",
 	"<leader>fy",
-	require("monarch.utils.yank").yank_history_telescope,
+	"<CMD>Telescope neoclip<CR>",
 	{ noremap = true, silent = true, desc = "Yank history" }
 )
+
+vim.keymap.set("n", "<ESC>", "<CMD>noh<CR>", { desc = "Clear Search Highlighting" })
+
+vim.keymap.set("n", "-", "<CMD>Oil<CR>")

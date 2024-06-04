@@ -67,7 +67,7 @@ function M.yank_history_telescope()
 			},
 			previewer = require("telescope.previewers").display_content.new {},
 			sorter = require("telescope.config").values.generic_sorter {},
-			attach_mappings = function(_, map)
+			attach_mappings = function(_, _)
 				require("telescope.actions").select_default:replace(function(prompt_bufnr)
 					local entry = require("telescope.actions.state").get_selected_entry()
 					require("telescope.actions").close(prompt_bufnr)

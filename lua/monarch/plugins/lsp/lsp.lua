@@ -80,6 +80,10 @@ local function organize_imports()
 end
 
 lsp_config.tsserver.setup {
+	on_attach = function(client)
+		client.server_capabilities.documentFormattingProvider = false
+		client.server_capabilities.documentRangeFormattingProvider = false
+	end,
 	commands = {
 		OrganizeImports = {
 			organize_imports,

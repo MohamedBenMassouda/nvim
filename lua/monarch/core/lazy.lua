@@ -18,9 +18,6 @@ local plugins = {
 		"folke/tokyonight.nvim",
 	},
 	{ "rose-pine/neovim", name = "rose-pine" },
-	{
-		"olimorris/onedarkpro.nvim",
-	},
 	-- Debugging
 	{
 		"rcarriga/nvim-dap-ui",
@@ -90,7 +87,14 @@ local plugins = {
 		-- Auto Pair/Close quotes, parantheses..
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
-		opts = {},
+		opts = {
+			check_ts = true,
+			ts_config = {
+				lua = { "string" }, -- it will not add a pair on that treesitter node
+				javascript = { "template_string" },
+				java = false, -- don't check treesitter on java
+			},
+		},
 	},
 	{
 		"jiangmiao/auto-pairs",
@@ -106,10 +110,6 @@ local plugins = {
 		end,
 	},
 	{
-		"numToStr/Comment.nvim",
-		config = function() require("Comment").setup() end,
-	},
-	{
 		"kyazdani42/nvim-web-devicons",
 	},
 	{
@@ -122,7 +122,6 @@ local plugins = {
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 			"nvim-telescope/telescope-ui-select.nvim",
 			"nvim-telescope/telescope-live-grep-args.nvim",
-			"nvim-telescope/telescope-file-browser.nvim",
 			"Slotos/telescope-lsp-handlers.nvim",
 			"nvim-telescope/telescope-dap.nvim",
 		},
@@ -135,6 +134,9 @@ local plugins = {
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
+		version = false,
+		build = ":TSUpdate",
+		run = "TSUpdate",
 		config = function()
 			require("nvim-treesitter.install").prefer_git = true
 			local parser = require("nvim-treesitter.parsers").get_parser_configs()
@@ -145,6 +147,7 @@ local plugins = {
 					revision = "8aa8ab977647da2d4dcfb8c4726341bee26fbce4", -- The last commit before the snail speed
 				},
 			}
+
 			require("nvim-treesitter.configs").setup {
 				autotag = {
 					enable = true,
@@ -184,11 +187,10 @@ local plugins = {
 				},
 				indent = {
 					enable = true,
-					disable = { "dart", "python" },
+					disable = { "dart", "python", "javascript", "typescript", "javascriptreact", "typescriptreact" },
 				},
 			}
 		end,
-		run = "TSUpdate",
 	},
 
 	-- LSP
@@ -290,11 +292,13 @@ local plugins = {
 		dependencies = {
 			"echasnovski/mini.extra",
 			"echasnovski/mini.pick",
+			"echasnovski/mini.files",
 		},
 		version = false,
 		config = function()
 			require("mini.cursorword").setup()
 			require("mini.extra").setup()
+			require("mini.files").setup()
 		end,
 	},
 	{
@@ -449,6 +453,7 @@ local plugins = {
 			"nvim-java/nvim-java-core",
 			"nvim-java/nvim-java-test",
 			"nvim-java/nvim-java-dap",
+			"nvim-java/nvim-java-refactor",
 			"MunifTanjim/nui.nvim",
 			"neovim/nvim-lspconfig",
 			"mfussenegger/nvim-dap",
@@ -474,15 +479,6 @@ local plugins = {
 		ft = { "cs" },
 	},
 	{
-		"tiagovla/tokyodark.nvim",
-		opts = {},
-		config = function(_, opts)
-			require("tokyodark").setup {
-				transparent_background = true,
-			}
-		end,
-	},
-	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
 		build = "cd app && yarn install",
@@ -493,17 +489,6 @@ local plugins = {
 		"tpope/vim-sleuth",
 	},
 	{
-		"NeogitOrg/neogit",
-		dependencies = {
-			"nvim-lua/plenary.nvim", -- required
-			"sindrets/diffview.nvim", -- optional - Diff integration
-
-			-- Only one of these is needed, not both.
-			"ibhagwan/fzf-lua", -- optional
-		},
-		config = true,
-	},
-	{
 		"AckslD/nvim-neoclip.lua",
 		dependencies = {
 			-- you'll need at least one of these
@@ -511,6 +496,14 @@ local plugins = {
 			{ "ibhagwan/fzf-lua" },
 		},
 		config = function() require("neoclip").setup() end,
+	},
+	{
+		"stevearc/oil.nvim",
+		opts = {
+			default_file_explorer = true,
+		},
+		-- Optional dependencies
+		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 }
 

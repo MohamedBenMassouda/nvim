@@ -35,6 +35,13 @@ luasnip.add_snippets(nil, {
 		}, {
 			func(get_package_name, {}),
 		}),
+		snip({
+			trig = "sout",
+			namr = "sout",
+			dscr = "Print to the standard output",
+		}, {
+			func(function() return "System.out.println($0);" end, {}),
+		}),
 	},
 })
 
