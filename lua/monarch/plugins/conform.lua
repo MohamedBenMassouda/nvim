@@ -12,7 +12,7 @@ conform.setup {
 		lua = { "stylua" },
 		cs = { "csharpier" },
 		-- Conform will run multiple formatters sequentially
-		python = { "isort", "black" },
+		python = { "isort", "ruff_format" },
 		-- Use a sub-list to run only the first available formatter
 		javascript = { { "prettierd", "prettier" } },
 		typescript = { { "prettierd", "prettier" } },

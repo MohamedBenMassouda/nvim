@@ -48,13 +48,13 @@ lsp_config.omnisharp.setup {
 	enable_import_completion = true,
 }
 
--- lsp_config.pyright.setup {
--- 	settings = {
--- 		pyright = {
--- 			autoImportCompletions = true,
--- 		},
--- 	},
--- }
+lsp_config.pyright.setup {
+	settings = {
+		pyright = {
+			autoImportCompletions = true,
+		},
+	},
+}
 
 require("neodev").setup {
 	library = { plugins = { "nvim-dap-ui" }, types = true },
