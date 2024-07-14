@@ -1,5 +1,3 @@
-require "monarch.core.lazy"
-require "monarch.core.keymaps"
-require "monarch.core.options"
-require "monarch.core.colorscheme"
-require "monarch.plugins"
+require("config.lazy")
+require("config.keymaps")
+require("config.options")
