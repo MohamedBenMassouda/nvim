@@ -37,4 +37,7 @@ return {
 	-- 	"vinnymeller/swagger-preview.nvim",
 	-- 	build = "yarn i swagger-ui-watcher",
 	-- },
+	{
+		"tpope/vim-dadbod",
+	},
 }

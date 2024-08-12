@@ -1,3 +1,4 @@
+local basedpyright = require("lspconfig.server_configurations.basedpyright")
 return {
 	{
 		"luckasRanarison/clear-action.nvim",

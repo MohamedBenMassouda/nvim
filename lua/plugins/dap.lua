@@ -100,4 +100,11 @@ return {
 			end, { desc = "Debug: Set Breakpoint" })
 		end,
 	},
+	{
+		"mfussenegger/nvim-dap-python",
+		after = "nvim-dap",
+		config = function()
+			require("dap-python").setup("~/.local/share/nvim/mason/packages/debugpy/")
+		end,
+	},
 }
