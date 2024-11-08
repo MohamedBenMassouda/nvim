@@ -1,5 +1,4 @@
 local keymap = vim.keymap
-vim.g.mapleader = " "
 
 keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Explorer" })
 
@@ -20,17 +19,19 @@ keymap.set("n", "<leader>fc", "<CMD>FzfLua commands<CR>", { desc = "Find Command
 keymap.set("n", "<leader>fd", "<CMD>FzfLua diagnostics<CR>", { desc = "Find Diagnostics" })
 keymap.set("n", "<leader>tr", "<CMD>FzfLua resume<CR>", { desc = "Resume Last FzfLua action" })
 keymap.set("n", "<leader>th", "<CMD>FzfLua colorschemes<CR>", { desc = "Resume Last FzfLua action" })
+keymap.set("n", "<leader>fg", "<CMD>lua require('fzf-lua').grep()<CR>", { desc = "Ripgrep" })
+keymap.set("n", "<leader>ft", require("utils.flutter").flutter_commands, { desc = "Flutter Commands" })
 
 keymap.set("n", "<C-s>", function()
-	vim.cmd("w")
+  vim.cmd("w")
 end, { desc = "Save File" })
 keymap.set("n", "<C-q>", "<CMD>q<CR>", { desc = "Quit" })
 
 keymap.set("n", "x", '"_x"')
 
-keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split Window Vertically" }) -- Split Window Vertically
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split Window Horizontally" }) -- Split Window Horizontally
-keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make Split Windows Even" }) -- Make Split windows split evenly
+keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split Window Vertically" })            -- Split Window Vertically
+keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split Window Horizontally" })          -- Split Window Horizontally
+keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make Split Windows Even" })            -- Make Split windows split evenly
 keymap.set("n", "<leader>sx", "<CMD>close<CR>", { desc = "Close Current Split Window" }) -- Close Current Split Window
 
 -- Telescope Keymaps
@@ -43,10 +44,10 @@ keymap.set("n", "<leader>sx", "<CMD>close<CR>", { desc = "Close Current Split Wi
 -- keymap.set("n", "<leader>k", "<CMD>Telescope keymaps<CR>", { desc = "Keymaps With Telescope" })
 -- keymap.set("n", "<leader>fwa", "<CMD>Telescope grep_string<CR>", { desc = "Find Word Current Word" })
 keymap.set(
-	"n",
-	"<leader>fwc",
-	"<CMD>Telescope current_buffer_fuzzy_find<CR>",
-	{ desc = "Find Word in Current Buffer with Telescope" }
+  "n",
+  "<leader>fwc",
+  "<CMD>Telescope current_buffer_fuzzy_find<CR>",
+  { desc = "Find Word in Current Buffer with Telescope" }
 )
 
 keymap.set("n", "<leader>sr", ":%s/", { desc = "Search and Replace In all the File" })
@@ -57,19 +58,19 @@ keymap.set("n", "<leader>gm", "<CMD>GitMessenger<CR>", { desc = "Git Blame in Fl
 -- Trouble
 -- Lua
 vim.keymap.set("n", "<leader>xx", function()
-	require("trouble").open()
+  require("trouble").open()
 end, { desc = "Open Trouble" })
 vim.keymap.set("n", "<leader>xw", function()
-	require("trouble").open("workspace_diagnostics")
+  require("trouble").open("workspace_diagnostics")
 end, { desc = "Open Trouble Workspace Diagnostics" })
 vim.keymap.set("n", "<leader>xd", function()
-	require("trouble").open("document_diagnostics")
+  require("trouble").open("document_diagnostics")
 end, { desc = "Open Trouble Document Diagnostics" })
 vim.keymap.set("n", "<leader>xl", function()
-	require("trouble").open("quickfix")
+  require("trouble").open("quickfix")
 end, { desc = "Open Trouble Quickfix" })
 vim.keymap.set("n", "<leader>xq", function()
-	require("trouble").open("loclist")
+  require("trouble").open("loclist")
 end, { desc = "Open Trouble Loclist" })
 
 -- Debugging
@@ -77,9 +78,9 @@ vim.keymap.set("n", "<leader>b", "<CMD>lua require'dap'.toggle_breakpoint()<CR>"
 vim.keymap.set("n", "<leader>dc", "<CMD>lua require'dap'.continue()<CR>", { desc = "Continue" })
 
 vim.keymap.set("n", "<C-=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
-vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
-vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
-vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
+vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]])    -- make the window smaller vertically
+vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]])  -- make the window bigger horizontally by pressing shift and =
+vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]])  -- make the window smaller horizontally by pressing shift and -
 
 -- Git
 local git = require("gitsigns")
@@ -102,17 +103,17 @@ vim.keymap.set("n", "gM", "<CMD>Glance implementations<CR>")
 
 -- Formatting
 vim.keymap.set({ "n", "v" }, "<leader>cf", function()
-	-- vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-	require("conform").format({
-		async = false,
-		lsp_fallback = true,
-		timeout_ms = 500,
-	})
+  -- vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+  require("conform").format({
+    async = false,
+    lsp_fallback = true,
+    timeout_ms = 500,
+  })
 end, { desc = "Format File" })
 
 -- TreeSitter
 vim.keymap.set("n", "[c", function()
-	require("treesitter-context").go_to_context()
+  require("treesitter-context").go_to_context()
 end, { silent = true, desc = "Go to Previous Context" })
 
 -- keymap.set("n", "<leader>md", "<CMD>lua MiniExtra.pickers.diagnostic()<CR>", { desc = "Open Mini" })
@@ -136,17 +137,17 @@ keymap.set("n", "<leader>md", "<CMD>lua MiniFiles.open()<CR>", { desc = "Open Fi
 -- Toggle bool values
 
 vim.keymap.set("n", "<leader>tb", function()
-	local line = vim.api.nvim_get_current_line()
+  local line = vim.api.nvim_get_current_line()
 
-	if line:match("true") then
-		local new_line = line:gsub("true", "false")
-		vim.api.nvim_set_current_line(new_line)
-	end
+  if line:match("true") then
+    local new_line = line:gsub("true", "false")
+    vim.api.nvim_set_current_line(new_line)
+  end
 
-	if line:match("false") then
-		local new_line = line:gsub("false", "true")
-		vim.api.nvim_set_current_line(new_line)
-	end
+  if line:match("false") then
+    local new_line = line:gsub("false", "true")
+    vim.api.nvim_set_current_line(new_line)
+  end
 end, { desc = "Toggle Boolean Values" })
 
 -- Really awesome command for searching and replacing in the whole file
@@ -170,10 +171,10 @@ end, { desc = "Toggle Boolean Values" })
 -- )
 
 vim.keymap.set(
-	"n",
-	"<leader>fy",
-	"<CMD>Telescope neoclip<CR>",
-	{ noremap = true, silent = true, desc = "Yank history" }
+  "n",
+  "<leader>fy",
+  "<CMD>Telescope neoclip<CR>",
+  { noremap = true, silent = true, desc = "Yank history" }
 )
 
 vim.keymap.set("n", "<ESC>", "<CMD>noh<CR>", { desc = "Clear Search Highlighting" })
