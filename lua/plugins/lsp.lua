@@ -63,6 +63,10 @@ return {
           return
         end
 
+        if server == "jdtls" then
+          return
+        end
+
         require("lspconfig")[server].setup({
           capabilities = lsp_capabilities,
         })
