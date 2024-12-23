@@ -1,5 +1,4 @@
 return {
-  { "Hoffs/omnisharp-extended-lsp.nvim", lazy = true },
   {
     "mfussenegger/nvim-dap",
     optional = true,
@@ -48,21 +47,10 @@ return {
     },
   },
   {
-    "iabdelkareem/csharp.nvim",
-    dependencies = {
-      "williamboman/mason.nvim", -- Required, automatically installs omnisharp
-      "mfussenegger/nvim-dap",
-      "Tastyep/structlog.nvim",  -- Optional, but highly recommended for debugging
-    },
-    config = function()
-      require("mason").setup() -- Mason setup must run before csharp, only if you want to use omnisharp
-      require("csharp").setup({
-        lsp = {
-          roslyn = {
-            enable = true,
-          }
-        }
-      })
-    end
-  },
+    "seblj/roslyn.nvim",
+    ft = "cs",
+    opts = {
+      -- your configuration comes here; leave empty for default settings
+    }
+  }
 }
