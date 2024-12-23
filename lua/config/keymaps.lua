@@ -180,3 +180,28 @@ vim.keymap.set(
 vim.keymap.set("n", "<ESC>", "<CMD>noh<CR>", { desc = "Clear Search Highlighting" })
 
 vim.keymap.set("n", "-", "<CMD>Oil<CR>")
+
+local kulala = require("kulala")
+vim.keymap.set("n", "<leader>rr", function()
+    kulala.run()
+  end,
+  { noremap = true, silent = true, desc = "Run HTTP request" }
+)
+
+vim.keymap.set("n", "<leader>rl", function()
+    kulala.replay()
+  end,
+  { noremap = true, silent = true, desc = "Re-run last HTTP request" }
+)
+
+vim.keymap.set("n", "<leader>rss", function()
+    kulala.show_stats()
+  end,
+  { noremap = true, silent = true, desc = "Show stats of the last request" }
+)
+
+vim.keymap.set("n", "<leader>rsp", function()
+    kulala.scratchpad()
+  end,
+  { noremap = true, silent = true, desc = "Opens a scratchpad for temporary requests" }
+)

@@ -60,3 +60,9 @@ vim.filetype.add({
 })
 
 vim.g.copilot_assume_mapped = true
+
+vim.filetype.add({
+	extension = {
+		['http'] = 'http',
+	},
+})
