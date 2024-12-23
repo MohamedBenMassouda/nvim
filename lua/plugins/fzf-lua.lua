@@ -21,6 +21,7 @@ return {
         "web",
         "ios",
         "android",
+        "@girs"
       }
 
       require("fzf-lua").setup {
