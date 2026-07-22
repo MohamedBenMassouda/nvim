@@ -8,6 +8,7 @@ return {
       },
     },
   },
+  { "artemave/workspace-diagnostics.nvim" },
   {
     "mason-org/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonUpdate", "MasonUninstall" },
@@ -49,6 +50,14 @@ return {
       -- Apply cmp capabilities to every server, including roslyn
       vim.lsp.config("*", {
         capabilities = require("blink.cmp").get_lsp_capabilities(),
+        on_attach = function(client, bufnr)
+          -- some clients support workspace diagnostics natively
+          if client:supports_method("workspace/diagnostic", bufnr) then
+            vim.lsp.buf.workspace_diagnostics({ client_id = client.id })
+          else
+            require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
+          end
+        end
       })
 
       require("mason").setup({

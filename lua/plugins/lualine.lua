@@ -6,6 +6,27 @@ return {
     { 'AndreM222/copilot-lualine' },
   },
   config = function()
+    local function project_diagnostics()
+      local counts = vim.diagnostic.count(nil) -- nil = all buffers
+      local s      = vim.diagnostic.severity
+      local icons  = { [s.ERROR] = "", [s.WARN] = "", [s.INFO] = "󰋽", [s.HINT] = " " }
+      local hl     = {
+        [s.ERROR] = "DiagnosticError",
+        [s.WARN] = "DiagnosticWarn",
+        [s.INFO] = "DiagnosticInfo",
+        [s.HINT] = "DiagnosticHint"
+      }
+      local parts  = {}
+      for _, sev in ipairs({ s.ERROR, s.WARN, s.INFO, s.HINT }) do
+        local n = counts[sev] or 0
+
+        if n > 0 then
+          table.insert(parts, string.format("%%#%s#%s%d", hl[sev], icons[sev], n))
+        end
+      end
+      return #parts > 0 and (table.concat(parts, " ") .. "%#StatusLine#") or ""
+    end
+
     require("lualine").setup {
       options = {
         icons_enabled = false,      -- Disable icons for a minimal look
@@ -87,6 +108,9 @@ return {
             --   -- spinners = require("copilot-status.spinners").dots
             -- },
           },
+        },
+        lualine_y = {
+          project_diagnostics,
         },
       },
     }

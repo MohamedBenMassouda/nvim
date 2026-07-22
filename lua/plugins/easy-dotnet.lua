@@ -8,6 +8,9 @@ return {
   },
   config = function()
     require("easy-dotnet").setup({
+      config = {
+        ft = "cs"
+      },
       -- lsp = { enabled = false },
       test_runner = {
         viewmode = "float", -- "split" | "vsplit" | "float" | "buf"
