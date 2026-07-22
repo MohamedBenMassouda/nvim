@@ -22,18 +22,3 @@ vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave", "TextChanged" }, {
   end,
 })
 map("n", "<leader>cl", vim.lsp.codelens.run, vim.tbl_extend("force", opts, { desc = "Run code lens" }))
-
--- neotest (neotest-dotnet) test runner keymaps
-local ok, neotest = pcall(require, "neotest")
-if ok then
-  map("n", "<leader>tt", function() neotest.run.run() end,
-    vim.tbl_extend("force", opts, { desc = "Test: nearest" }))
-  map("n", "<leader>tf", function() neotest.run.run(vim.fn.expand("%")) end,
-    vim.tbl_extend("force", opts, { desc = "Test: file" }))
-  map("n", "<leader>td", function() neotest.run.run({ strategy = "dap" }) end,
-    vim.tbl_extend("force", opts, { desc = "Test: debug nearest" }))
-  map("n", "<leader>ts", function() neotest.summary.toggle() end,
-    vim.tbl_extend("force", opts, { desc = "Test: summary" }))
-  map("n", "<leader>to", function() neotest.output.open({ enter = true }) end,
-    vim.tbl_extend("force", opts, { desc = "Test: output panel" }))
-end
