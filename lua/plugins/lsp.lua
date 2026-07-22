@@ -13,7 +13,6 @@ return {
     dependencies = {
       { "mason-org/mason.nvim", opts = {} },
       "mason-org/mason-lspconfig.nvim",
-      "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
       -- Diagnostics keymaps (global; not LSP-exclusive)
