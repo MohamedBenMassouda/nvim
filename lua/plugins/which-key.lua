@@ -8,5 +8,6 @@ return {
 	opts = {
 		{ "<leader>q", group = "Session" },
 		{ "<leader>r", group = "Rename/Refactor" },
+		{ "<leader>t", group = "Test" },
 	},
 }

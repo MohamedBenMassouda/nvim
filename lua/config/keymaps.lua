@@ -15,10 +15,10 @@ keymap.set("n", "<leader>k", "<CMD>FzfLua keymaps<CR>", { desc = "Keymaps With F
 keymap.set("n", "<leader>fwa", "<CMD>FzfLua grep_cWORD<CR>", { desc = "Find Word Current Word" })
 -- keymap.set("n", "<leader>fwc", "<CMD>FzfLua grep_curbuf<CR>", { desc = "Find Word in Current Buffer with FzfLua" })
 keymap.set("n", "<leader>fs", "<CMD>FzfLua live_grep_native<CR>", { desc = "Find Word in Current Buffer with FzfLua" })
-keymap.set("n", "<leader>fc", "<CMD>FzfLua commands<CR>", { desc = "Find Commands" })
+keymap.set("n", "<leader>fC", "<CMD>FzfLua commands<CR>", { desc = "Find Commands" })
 keymap.set("n", "<leader>fd", "<CMD>FzfLua diagnostics<CR>", { desc = "Find Diagnostics" })
-keymap.set("n", "<leader>tr", "<CMD>FzfLua resume<CR>", { desc = "Resume Last FzfLua action" })
-keymap.set("n", "<leader>th", "<CMD>FzfLua colorschemes<CR>", { desc = "Resume Last FzfLua action" })
+keymap.set("n", "<leader>fr", "<CMD>FzfLua resume<CR>", { desc = "Resume Last FzfLua action" })
+keymap.set("n", "<leader>fc", "<CMD>FzfLua colorschemes<CR>", { desc = "Colorschemes" })
 keymap.set("n", "<leader>fg", "<CMD>lua require('fzf-lua').grep()<CR>", { desc = "Ripgrep" })
 -- keymap.set("n", "<leader>ft", require("utils.flutter").flutter_commands, { desc = "Flutter Commands" })
 
@@ -136,7 +136,7 @@ keymap.set("n", "<leader>md", "<CMD>lua MiniFiles.open()<CR>", { desc = "Open Fi
 
 -- Toggle bool values
 
-vim.keymap.set("n", "<leader>tb", function()
+vim.keymap.set("n", "<leader>ub", function()
   local line = vim.api.nvim_get_current_line()
 
   if line:match("true") then
