@@ -205,3 +205,7 @@ vim.keymap.set("n", "<leader>rsp", function()
   end,
   { noremap = true, silent = true, desc = "Opens a scratchpad for temporary requests" }
 )
+
+vim.keymap.set("n", "<leader>nd", function() Snacks.notifier.hide() end, { desc = "Dismiss all notifications" })
+vim.keymap.set("n", "<leader>nh", function() Snacks.notifier.show_history() end, { desc = "Notification history" })
+vim.keymap.set({ "n", "t" }, "<c-/>", function() Snacks.terminal.toggle() end, { desc = "Toggle terminal" })
