@@ -117,6 +117,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
+      "lewis6991/async.nvim",
     },
     lazy = false,
     config = function()
@@ -205,5 +206,21 @@ return {
         end,
       })
     end,
+  },
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre",
+    opts = {},
+    keys = {
+      { "<leader>qs", function() require("persistence").load() end,                desc = "Restore session (cwd)" },
+      { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore last session" },
+      { "<leader>qS", function() require("persistence").select() end,              desc = "Select session" },
+      { "<leader>qd", function() require("persistence").stop() end,                desc = "Stop saving session" },
+    },
+  },
+  {
+    "smjonas/inc-rename.nvim",
+    cmd = "IncRename",
+    opts = {},
   },
 }
