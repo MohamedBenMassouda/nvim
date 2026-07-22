@@ -20,7 +20,7 @@ keymap.set("n", "<leader>fd", "<CMD>FzfLua diagnostics<CR>", { desc = "Find Diag
 keymap.set("n", "<leader>tr", "<CMD>FzfLua resume<CR>", { desc = "Resume Last FzfLua action" })
 keymap.set("n", "<leader>th", "<CMD>FzfLua colorschemes<CR>", { desc = "Resume Last FzfLua action" })
 keymap.set("n", "<leader>fg", "<CMD>lua require('fzf-lua').grep()<CR>", { desc = "Ripgrep" })
-keymap.set("n", "<leader>ft", require("utils.flutter").flutter_commands, { desc = "Flutter Commands" })
+-- keymap.set("n", "<leader>ft", require("utils.flutter").flutter_commands, { desc = "Flutter Commands" })
 
 keymap.set("n", "<C-s>", function()
   vim.cmd("w")

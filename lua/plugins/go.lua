@@ -12,8 +12,8 @@ return {
 			end,
 		},
 	},
-	event = { "CmdlineEnter" },
 	ft = { "go", "gomod" },
+	cmd = { "GoRun", "GoTest", "GoBuild", "GoImports", "GoFmt" },
 	build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 	config = function()
 		-- Check if a go project then setup
