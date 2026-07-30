@@ -15,6 +15,12 @@ return {
       test_runner = {
         neotest_integration = true,
       },
+      -- easy-dotnet only supports "integratedTerminal" | "externalTerminal".
+      -- integratedTerminal renders the debuggee's output into nvim-dap-ui's
+      -- `console` element (added to the dap layout in dap.lua). Supports stdin.
+      debugger = {
+        console = "integratedTerminal",
+      },
     })
   end,
 }

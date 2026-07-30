@@ -16,6 +16,9 @@ return {
     -- "fredrikaverpil/neotest-golang",   -- Go
     -- "nvim-neotest/neotest-plenary",    -- Lua (plenary busted)
   },
+  -- Load on test filetypes too (not just the <leader>t keys) so discovery can
+  -- start on file open instead of waiting for the first summary/run.
+  ft = { "cs", "fsharp", "razor" },
   config = function()
     local neotest = require("neotest")
 
@@ -119,6 +122,25 @@ return {
         running_animated = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
       },
     })
+
+    -- Auto-start discovery so parsing doesn't wait for the summary window.
+    -- neotest's client (and its buffer-discovery autocmds) only start on the
+    -- first consumer call; opening the summary was that trigger. Warm it once
+    -- per session via a background suite-discovery pass. Safe when no .NET
+    -- solution is selected: easy-dotnet's root() returns nil and it no-ops.
+    local warmed = false
+    local function warm_discovery()
+      if warmed then return end
+      warmed = true
+      require("nio").run(function()
+        pcall(require("neotest").run.get_tree_from_args, { suite = true }, false)
+      end)
+    end
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = { "cs", "fsharp", "razor" },
+      callback = warm_discovery,
+    })
+    warm_discovery() -- current buffer (this config runs on first test-file open)
   end,
   keys = {
     { "<leader>tr", function() require("neotest").run.run() end,                                        desc = "Run test under cursor" },
@@ -129,6 +151,28 @@ return {
     { "<leader>tS", function() require("neotest").run.stop() end,                                       desc = "Stop running test" },
     { "<leader>tw", function() require("neotest").watch.toggle(vim.fn.expand("%")) end,                 desc = "Toggle watch (file)" },
     { "<leader>ts", function() require("neotest").summary.toggle() end,                                 desc = "Toggle summary window" },
+    -- easy-dotnet discovers the .NET test list once per session; a test file added
+    -- afterwards stays invisible ("no tests detected"). This re-runs discovery
+    -- (rebuild + enumerate) and re-scans the current buffer — no nvim restart.
+    { "<leader>tR", function()
+      local ok, sln = pcall(function() return require("easy-dotnet.current_solution").try_get_selected_solution() end)
+      if not ok or not sln then
+        vim.notify("easy-dotnet: no solution selected", vim.log.levels.WARN)
+        return
+      end
+      local client = require("easy-dotnet.rpc.rpc").global_rpc_client
+      local state = require("easy-dotnet.test-runner.state")
+      state.initialized = false
+      client:initialize(function()
+        client.testrunner:initialize(sln, function(res)
+          if res and res.success then state.initialized = true end
+          vim.schedule(function()
+            -- re-scan current buffer against the refreshed server list (no file write)
+            pcall(vim.api.nvim_exec_autocmds, "BufWritePost", { buffer = 0 })
+          end)
+        end)
+      end)
+    end, desc = "Refresh .NET test discovery (rebuild + re-scan)" },
     { "<leader>to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show test output (float)" },
     { "<leader>tO", function() require("neotest").output_panel.toggle() end,                            desc = "Toggle output panel" },
     { "<leader>tj", function() require("neotest").jump.next({ status = "failed" }) end,                 desc = "Jump to next failed test" },
