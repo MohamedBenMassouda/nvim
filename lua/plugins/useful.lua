@@ -11,7 +11,7 @@ return {
     },
   },
   { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
-  {                                        -- optional blink completion source for require statements and module annotations
+  { -- optional blink completion source for require statements and module annotations
     "saghen/blink.cmp",
     opts = {
       sources = {
@@ -48,7 +48,7 @@ return {
     "tpope/vim-dadbod",
   },
   {
-    'stevearc/oil.nvim',
+    "stevearc/oil.nvim",
     ---@module 'oil'
     ---@type oil.SetupOpts
     opts = {},
@@ -61,7 +61,7 @@ return {
     opts = {
       event = "BufRead",
       cmd = { "GuessIndent" },
-    }
+    },
   },
   {
     "folke/todo-comments.nvim",
@@ -70,7 +70,7 @@ return {
       -- your configuration comes here
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
-    }
+    },
   },
   {
     "ThePrimeagen/refactoring.nvim",
@@ -100,26 +100,118 @@ return {
       words = { enabled = true },
       styles = {
         notification = {
-          wo = { wrap = true } -- Wrap notifications
-        }
-      }
+          wo = { wrap = true }, -- Wrap notifications
+        },
+      },
     },
     keys = {
-      { "<leader>.",  function() Snacks.scratch() end,                 desc = "Toggle Scratch Buffer" },
-      { "<leader>S",  function() Snacks.scratch.select() end,          desc = "Select Scratch Buffer" },
-      { "<leader>h",  function() Snacks.notifier.show_history() end,   desc = "Notification History" },
-      { "<leader>bd", function() Snacks.bufdelete() end,               desc = "Delete Buffer" },
-      { "<leader>cR", function() Snacks.rename.rename_file() end,      desc = "Rename File" },
-      { "<leader>gB", function() Snacks.gitbrowse() end,               desc = "Git Browse" },
-      { "<leader>gb", function() Snacks.git.blame_line() end,          desc = "Git Blame Line" },
-      { "<leader>gf", function() Snacks.lazygit.log_file() end,        desc = "Lazygit Current File History" },
-      { "<leader>gg", function() Snacks.lazygit() end,                 desc = "Lazygit" },
-      { "<leader>gl", function() Snacks.lazygit.log() end,             desc = "Lazygit Log (cwd)" },
-      { "<leader>nd", function() Snacks.notifier.hide() end,           desc = "Dismiss All Notifications" },
-      { "<c-/>",      function() Snacks.terminal() end,                desc = "Toggle Terminal" },
-      { "<c-_>",      function() Snacks.terminal() end,                desc = "which_key_ignore" },
-      { "]]",         function() Snacks.words.jump(vim.v.count1) end,  desc = "Next Reference",              mode = { "n", "t" } },
-      { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference",              mode = { "n", "t" } },
+      {
+        "<leader>.",
+        function()
+          Snacks.scratch()
+        end,
+        desc = "Toggle Scratch Buffer",
+      },
+      {
+        "<leader>S",
+        function()
+          Snacks.scratch.select()
+        end,
+        desc = "Select Scratch Buffer",
+      },
+      {
+        "<leader>h",
+        function()
+          Snacks.notifier.show_history()
+        end,
+        desc = "Notification History",
+      },
+      {
+        "<leader>bd",
+        function()
+          Snacks.bufdelete()
+        end,
+        desc = "Delete Buffer",
+      },
+      {
+        "<leader>cR",
+        function()
+          Snacks.rename.rename_file()
+        end,
+        desc = "Rename File",
+      },
+      {
+        "<leader>gB",
+        function()
+          Snacks.gitbrowse()
+        end,
+        desc = "Git Browse",
+      },
+      {
+        "<leader>gb",
+        function()
+          Snacks.git.blame_line()
+        end,
+        desc = "Git Blame Line",
+      },
+      {
+        "<leader>gf",
+        function()
+          Snacks.lazygit.log_file()
+        end,
+        desc = "Lazygit Current File History",
+      },
+      {
+        "<leader>gg",
+        function()
+          Snacks.lazygit()
+        end,
+        desc = "Lazygit",
+      },
+      {
+        "<leader>gl",
+        function()
+          Snacks.lazygit.log()
+        end,
+        desc = "Lazygit Log (cwd)",
+      },
+      {
+        "<leader>nd",
+        function()
+          Snacks.notifier.hide()
+        end,
+        desc = "Dismiss All Notifications",
+      },
+      {
+        "<c-/>",
+        function()
+          Snacks.terminal()
+        end,
+        desc = "Toggle Terminal",
+      },
+      {
+        "<c-_>",
+        function()
+          Snacks.terminal()
+        end,
+        desc = "which_key_ignore",
+      },
+      {
+        "]]",
+        function()
+          Snacks.words.jump(vim.v.count1)
+        end,
+        desc = "Next Reference",
+        mode = { "n", "t" },
+      },
+      {
+        "[[",
+        function()
+          Snacks.words.jump(-vim.v.count1)
+        end,
+        desc = "Prev Reference",
+        mode = { "n", "t" },
+      },
       {
         "<leader>N",
         desc = "Neovim News",
@@ -137,7 +229,7 @@ return {
             },
           })
         end,
-      }
+      },
     },
     init = function()
       vim.api.nvim_create_autocmd("User", {
@@ -158,8 +250,9 @@ return {
           Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>sL")
           Snacks.toggle.diagnostics():map("<leader>sd")
           Snacks.toggle.line_number():map("<leader>sl")
-          Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map(
-            "<leader>sc")
+          Snacks.toggle
+            .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+            :map("<leader>sc")
           Snacks.toggle.treesitter():map("<leader>sT")
           Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>sb")
           Snacks.toggle.inlay_hints():map("<leader>sH")
@@ -172,10 +265,34 @@ return {
     event = "BufReadPre",
     opts = {},
     keys = {
-      { "<leader>qs", function() require("persistence").load() end,                desc = "Restore session (cwd)" },
-      { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore last session" },
-      { "<leader>qS", function() require("persistence").select() end,              desc = "Select session" },
-      { "<leader>qd", function() require("persistence").stop() end,                desc = "Stop saving session" },
+      {
+        "<leader>qs",
+        function()
+          require("persistence").load()
+        end,
+        desc = "Restore session (cwd)",
+      },
+      {
+        "<leader>ql",
+        function()
+          require("persistence").load({ last = true })
+        end,
+        desc = "Restore last session",
+      },
+      {
+        "<leader>qS",
+        function()
+          require("persistence").select()
+        end,
+        desc = "Select session",
+      },
+      {
+        "<leader>qd",
+        function()
+          require("persistence").stop()
+        end,
+        desc = "Stop saving session",
+      },
     },
   },
   {

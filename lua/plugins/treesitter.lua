@@ -6,9 +6,16 @@ return {
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter").install({
-        "c", "lua", "vim", "vimdoc", "query",
-        "markdown", "markdown_inline",
-        "javascript", "html", "c_sharp",
+        "c",
+        "lua",
+        "vim",
+        "vimdoc",
+        "query",
+        "markdown",
+        "markdown_inline",
+        "javascript",
+        "html",
+        "c_sharp",
       })
 
       vim.api.nvim_create_autocmd("FileType", {

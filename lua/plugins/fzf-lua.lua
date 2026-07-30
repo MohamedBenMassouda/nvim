@@ -21,15 +21,15 @@ return {
         "web",
         "ios",
         "android",
-        "@girs"
+        "@girs",
       }
 
-      require("fzf-lua").setup {
+      require("fzf-lua").setup({
         file_ignore_patterns = ignore,
         -- winopts = {
         -- 	preview = { default = "bat" },
         -- },
-      }
+      })
     end,
   },
 }

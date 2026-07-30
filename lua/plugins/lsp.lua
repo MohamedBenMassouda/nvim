@@ -12,7 +12,7 @@ return {
   {
     "mason-org/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonUpdate", "MasonUninstall" },
-    opts = {}
+    opts = {},
   },
   {
     "neovim/nvim-lspconfig",
@@ -22,8 +22,12 @@ return {
     config = function()
       -- Diagnostics keymaps (global; not LSP-exclusive)
       vim.keymap.set("n", "gl", vim.diagnostic.open_float)
-      vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end)
-      vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end)
+      vim.keymap.set("n", "[d", function()
+        vim.diagnostic.jump({ count = -1 })
+      end)
+      vim.keymap.set("n", "]d", function()
+        vim.diagnostic.jump({ count = 1 })
+      end)
 
       vim.api.nvim_create_autocmd("LspAttach", {
         desc = "LSP actions",
@@ -38,11 +42,15 @@ return {
           vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, opts)
           vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
           -- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-          vim.keymap.set("n", "<F2>", function() return ":IncRename " .. vim.fn.expand("<cword>") end,
-            vim.tbl_extend("force", opts, { expr = true }))
-          vim.keymap.set("n", "<leader>rn", function() return ":IncRename " .. vim.fn.expand("<cword>") end,
-            vim.tbl_extend("force", opts, { expr = true }))
-          vim.keymap.set({ "n", "x" }, "<F3>", function() vim.lsp.buf.format({ async = true }) end, opts)
+          vim.keymap.set("n", "<F2>", function()
+            return ":IncRename " .. vim.fn.expand("<cword>")
+          end, vim.tbl_extend("force", opts, { expr = true }))
+          vim.keymap.set("n", "<leader>rn", function()
+            return ":IncRename " .. vim.fn.expand("<cword>")
+          end, vim.tbl_extend("force", opts, { expr = true }))
+          vim.keymap.set({ "n", "x" }, "<F3>", function()
+            vim.lsp.buf.format({ async = true })
+          end, opts)
           vim.keymap.set("n", "<F4>", vim.lsp.buf.code_action, opts)
         end,
       })
@@ -57,7 +65,7 @@ return {
           else
             require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
           end
-        end
+        end,
       })
 
       require("mason").setup({

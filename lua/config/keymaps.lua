@@ -29,9 +29,9 @@ keymap.set("n", "<C-q>", "<CMD>q<CR>", { desc = "Quit" })
 
 keymap.set("n", "x", '"_x"')
 
-keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split Window Vertically" })            -- Split Window Vertically
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split Window Horizontally" })          -- Split Window Horizontally
-keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make Split Windows Even" })            -- Make Split windows split evenly
+keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split Window Vertically" }) -- Split Window Vertically
+keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split Window Horizontally" }) -- Split Window Horizontally
+keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make Split Windows Even" }) -- Make Split windows split evenly
 keymap.set("n", "<leader>sx", "<CMD>close<CR>", { desc = "Close Current Split Window" }) -- Close Current Split Window
 
 -- Telescope Keymaps
@@ -78,9 +78,9 @@ vim.keymap.set("n", "<leader>b", "<CMD>lua require'dap'.toggle_breakpoint()<CR>"
 vim.keymap.set("n", "<leader>dc", "<CMD>lua require'dap'.continue()<CR>", { desc = "Continue" })
 
 vim.keymap.set("n", "<C-=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
-vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]])    -- make the window smaller vertically
-vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]])  -- make the window bigger horizontally by pressing shift and =
-vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]])  -- make the window smaller horizontally by pressing shift and -
+vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
+vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
+vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
 
 -- Git
 local git = require("gitsigns")
@@ -173,6 +173,12 @@ vim.keymap.set("n", "<ESC>", "<CMD>noh<CR>", { desc = "Clear Search Highlighting
 
 vim.keymap.set("n", "-", "<CMD>Oil<CR>")
 
-vim.keymap.set("n", "<leader>nd", function() Snacks.notifier.hide() end, { desc = "Dismiss all notifications" })
-vim.keymap.set("n", "<leader>nh", function() Snacks.notifier.show_history() end, { desc = "Notification history" })
-vim.keymap.set({ "n", "t" }, "<c-/>", function() Snacks.terminal.toggle() end, { desc = "Toggle terminal" })
+vim.keymap.set("n", "<leader>nd", function()
+  Snacks.notifier.hide()
+end, { desc = "Dismiss all notifications" })
+vim.keymap.set("n", "<leader>nh", function()
+  Snacks.notifier.show_history()
+end, { desc = "Notification history" })
+vim.keymap.set({ "n", "t" }, "<c-/>", function()
+  Snacks.terminal.toggle()
+end, { desc = "Toggle terminal" })

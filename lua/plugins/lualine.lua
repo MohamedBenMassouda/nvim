@@ -1,22 +1,22 @@
 return {
-  'nvim-lualine/lualine.nvim',
+  "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
   dependencies = {
-    'nvim-tree/nvim-web-devicons',
-    { 'AndreM222/copilot-lualine' },
+    "nvim-tree/nvim-web-devicons",
+    { "AndreM222/copilot-lualine" },
   },
   config = function()
     local function project_diagnostics()
       local counts = vim.diagnostic.count(nil) -- nil = all buffers
-      local s      = vim.diagnostic.severity
-      local icons  = { [s.ERROR] = "", [s.WARN] = "", [s.INFO] = "󰋽", [s.HINT] = " " }
-      local hl     = {
+      local s = vim.diagnostic.severity
+      local icons = { [s.ERROR] = "", [s.WARN] = "", [s.INFO] = "󰋽", [s.HINT] = " " }
+      local hl = {
         [s.ERROR] = "DiagnosticError",
         [s.WARN] = "DiagnosticWarn",
         [s.INFO] = "DiagnosticInfo",
-        [s.HINT] = "DiagnosticHint"
+        [s.HINT] = "DiagnosticHint",
       }
-      local parts  = {}
+      local parts = {}
       for _, sev in ipairs({ s.ERROR, s.WARN, s.INFO, s.HINT }) do
         local n = counts[sev] or 0
 
@@ -27,41 +27,41 @@ return {
       return #parts > 0 and (table.concat(parts, " ") .. "%#StatusLine#") or ""
     end
 
-    require("lualine").setup {
+    require("lualine").setup({
       options = {
-        icons_enabled = false,      -- Disable icons for a minimal look
-        component_separators = '|', -- Separator between components
-        section_separators = '',    -- No section separators
+        icons_enabled = false, -- Disable icons for a minimal look
+        component_separators = "|", -- Separator between components
+        section_separators = "", -- No section separators
         theme = {
           normal = {
-            a = 'StatusLine',
-            b = 'StatusLine',
-            c = 'StatusLine',
+            a = "StatusLine",
+            b = "StatusLine",
+            c = "StatusLine",
           },
           insert = {
-            a = 'StatusLine',
-            b = 'StatusLine',
-            c = 'StatusLine',
+            a = "StatusLine",
+            b = "StatusLine",
+            c = "StatusLine",
           },
           visual = {
-            a = 'StatusLine',
-            b = 'StatusLine',
-            c = 'StatusLine',
+            a = "StatusLine",
+            b = "StatusLine",
+            c = "StatusLine",
           },
           replace = {
-            a = 'StatusLine',
-            b = 'StatusLine',
-            c = 'StatusLine',
+            a = "StatusLine",
+            b = "StatusLine",
+            c = "StatusLine",
           },
           command = {
-            a = 'StatusLine',
-            b = 'StatusLine',
-            c = 'StatusLine',
+            a = "StatusLine",
+            b = "StatusLine",
+            c = "StatusLine",
           },
           inactive = {
-            a = 'StatusLineNC',
-            b = 'StatusLineNC',
-            c = 'StatusLineNC',
+            a = "StatusLineNC",
+            b = "StatusLineNC",
+            c = "StatusLineNC",
           },
         },
       },
@@ -113,6 +113,6 @@ return {
           project_diagnostics,
         },
       },
-    }
-  end
+    })
+  end,
 }

@@ -34,11 +34,15 @@ return {
       -- name (DisplayName and/or method identifier) -> 0-based {s,0,e,0} range
       local function method_range_map(file_path)
         local fh = io.open(file_path, "r")
-        if not fh then return {} end
+        if not fh then
+          return {}
+        end
         local src = fh:read("*a")
         fh:close()
         local ok, parser = pcall(ts.get_string_parser, src, "c_sharp")
-        if not ok or not parser then return {} end
+        if not ok or not parser then
+          return {}
+        end
         local root = parser:parse()[1]:root()
         local q = ts.query.parse("c_sharp", "(method_declaration) @m")
         local map = {}
@@ -46,12 +50,16 @@ return {
           local s_row, _, e_row = node:range()
           local range = { s_row, 0, e_row, 0 }
           local name_node = node:field("name")[1]
-          if name_node then map[ts.get_node_text(name_node, src)] = range end
+          if name_node then
+            map[ts.get_node_text(name_node, src)] = range
+          end
           -- DisplayName from the method's attribute list(s), if any
           for child in node:iter_children() do
             if child:type() == "attribute_list" then
               local display = ts.get_node_text(child, src):match('DisplayName%s*=%s*"(.-)"')
-              if display then map[display] = range end
+              if display then
+                map[display] = range
+              end
             end
           end
         end
@@ -61,17 +69,21 @@ return {
       local orig_discover = dotnet.discover_positions
       dotnet.discover_positions = function(file_path)
         local tree = orig_discover(file_path)
-        if not tree then return tree end
+        if not tree then
+          return tree
+        end
         require("nio").scheduler() -- treesitter/vim APIs need the main loop
         local map = method_range_map(file_path)
         for _, node in tree:iter_nodes() do
           local d = node:data()
-          if (d.type == "test" or d.type == "namespace") then
+          if d.type == "test" or d.type == "namespace" then
             local r = d.range
             if not r or (r[1] == 0 and r[3] == 0) then -- collapsed
               local key = tostring(d.id):match("::method:(.+)$")
               local rng = key and map[key]
-              if rng then d.range = rng end
+              if rng then
+                d.range = rng
+              end
             end
           end
         end
@@ -130,7 +142,9 @@ return {
     -- solution is selected: easy-dotnet's root() returns nil and it no-ops.
     local warmed = false
     local function warm_discovery()
-      if warmed then return end
+      if warmed then
+        return
+      end
       warmed = true
       require("nio").run(function()
         pcall(require("neotest").run.get_tree_from_args, { suite = true }, false)
@@ -143,39 +157,119 @@ return {
     warm_discovery() -- current buffer (this config runs on first test-file open)
   end,
   keys = {
-    { "<leader>tr", function() require("neotest").run.run() end,                                        desc = "Run test under cursor" },
-    { "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end,                      desc = "Run tests in file/class" },
-    { "<leader>tT", function() require("neotest").run.run(vim.uv.cwd()) end,                            desc = "Run all tests (project)" },
-    { "<leader>tl", function() require("neotest").run.run_last() end,                                   desc = "Run last test" },
-    { "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end,                    desc = "Debug test under cursor" },
-    { "<leader>tS", function() require("neotest").run.stop() end,                                       desc = "Stop running test" },
-    { "<leader>tw", function() require("neotest").watch.toggle(vim.fn.expand("%")) end,                 desc = "Toggle watch (file)" },
-    { "<leader>ts", function() require("neotest").summary.toggle() end,                                 desc = "Toggle summary window" },
+    {
+      "<leader>tr",
+      function()
+        require("neotest").run.run()
+      end,
+      desc = "Run test under cursor",
+    },
+    {
+      "<leader>tf",
+      function()
+        require("neotest").run.run(vim.fn.expand("%"))
+      end,
+      desc = "Run tests in file/class",
+    },
+    {
+      "<leader>tT",
+      function()
+        require("neotest").run.run(vim.uv.cwd())
+      end,
+      desc = "Run all tests (project)",
+    },
+    {
+      "<leader>tl",
+      function()
+        require("neotest").run.run_last()
+      end,
+      desc = "Run last test",
+    },
+    {
+      "<leader>td",
+      function()
+        require("neotest").run.run({ strategy = "dap" })
+      end,
+      desc = "Debug test under cursor",
+    },
+    {
+      "<leader>tS",
+      function()
+        require("neotest").run.stop()
+      end,
+      desc = "Stop running test",
+    },
+    {
+      "<leader>tw",
+      function()
+        require("neotest").watch.toggle(vim.fn.expand("%"))
+      end,
+      desc = "Toggle watch (file)",
+    },
+    {
+      "<leader>ts",
+      function()
+        require("neotest").summary.toggle()
+      end,
+      desc = "Toggle summary window",
+    },
     -- easy-dotnet discovers the .NET test list once per session; a test file added
     -- afterwards stays invisible ("no tests detected"). This re-runs discovery
     -- (rebuild + enumerate) and re-scans the current buffer — no nvim restart.
-    { "<leader>tR", function()
-      local ok, sln = pcall(function() return require("easy-dotnet.current_solution").try_get_selected_solution() end)
-      if not ok or not sln then
-        vim.notify("easy-dotnet: no solution selected", vim.log.levels.WARN)
-        return
-      end
-      local client = require("easy-dotnet.rpc.rpc").global_rpc_client
-      local state = require("easy-dotnet.test-runner.state")
-      state.initialized = false
-      client:initialize(function()
-        client.testrunner:initialize(sln, function(res)
-          if res and res.success then state.initialized = true end
-          vim.schedule(function()
-            -- re-scan current buffer against the refreshed server list (no file write)
-            pcall(vim.api.nvim_exec_autocmds, "BufWritePost", { buffer = 0 })
+    {
+      "<leader>tR",
+      function()
+        local ok, sln = pcall(function()
+          return require("easy-dotnet.current_solution").try_get_selected_solution()
+        end)
+        if not ok or not sln then
+          vim.notify("easy-dotnet: no solution selected", vim.log.levels.WARN)
+          return
+        end
+        local client = require("easy-dotnet.rpc.rpc").global_rpc_client
+        local state = require("easy-dotnet.test-runner.state")
+        state.initialized = false
+        client:initialize(function()
+          client.testrunner:initialize(sln, function(res)
+            if res and res.success then
+              state.initialized = true
+            end
+            vim.schedule(function()
+              -- re-scan current buffer against the refreshed server list (no file write)
+              pcall(vim.api.nvim_exec_autocmds, "BufWritePost", { buffer = 0 })
+            end)
           end)
         end)
-      end)
-    end, desc = "Refresh .NET test discovery (rebuild + re-scan)" },
-    { "<leader>to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show test output (float)" },
-    { "<leader>tO", function() require("neotest").output_panel.toggle() end,                            desc = "Toggle output panel" },
-    { "<leader>tj", function() require("neotest").jump.next({ status = "failed" }) end,                 desc = "Jump to next failed test" },
-    { "<leader>tk", function() require("neotest").jump.prev({ status = "failed" }) end,                 desc = "Jump to prev failed test" },
+      end,
+      desc = "Refresh .NET test discovery (rebuild + re-scan)",
+    },
+    {
+      "<leader>to",
+      function()
+        require("neotest").output.open({ enter = true, auto_close = true })
+      end,
+      desc = "Show test output (float)",
+    },
+    {
+      "<leader>tO",
+      function()
+        require("neotest").output_panel.toggle()
+      end,
+      desc = "Toggle output panel",
+    },
+    {
+      "<leader>tj",
+      function()
+        require("neotest").jump.next({ status = "failed" })
+      end,
+      desc = "Jump to next failed test",
+    },
+    {
+      "<leader>tk",
+      function()
+        require("neotest").jump.prev({ status = "failed" })
+      end,
+      desc = "Jump to prev failed test",
+    },
   },
 }

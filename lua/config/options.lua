@@ -38,12 +38,12 @@ opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 opt.undofile = true
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-	group = vim.api.nvim_create_augroup("highlight_yank", {}),
-	desc = "Hightlight selection on yank",
-	pattern = "*",
-	callback = function()
-		vim.highlight.on_yank({ higroup = "IncSearch" })
-	end,
+  group = vim.api.nvim_create_augroup("highlight_yank", {}),
+  desc = "Hightlight selection on yank",
+  pattern = "*",
+  callback = function()
+    vim.highlight.on_yank({ higroup = "IncSearch" })
+  end,
 })
 
 -- vim.cmd "autocmd BufNewFile,BufRead *.dart setlocal tabstop=2 shiftwidth=2"
@@ -56,13 +56,13 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- vim.cmd "autocmd BufNewFile,BufRead *.h setlocal tabstop=2 shiftwidth=2"
 
 vim.filetype.add({
-	pattern = { [".*/hypr/.*%.conf"] = "hyprlang", [".*/rofi/.*%.rasi"] = "rasi" },
+  pattern = { [".*/hypr/.*%.conf"] = "hyprlang", [".*/rofi/.*%.rasi"] = "rasi" },
 })
 
 vim.g.copilot_assume_mapped = true
 
 vim.filetype.add({
-	extension = {
-		['http'] = 'http',
-	},
+  extension = {
+    ["http"] = "http",
+  },
 })

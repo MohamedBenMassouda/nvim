@@ -8,7 +8,7 @@ return {
   config = function()
     require("easy-dotnet").setup({
       config = {
-        ft = "cs"
+        ft = "cs",
       },
       -- neotest drives .NET tests (see lua/plugins/neotest.lua).
       -- Disables easy-dotnet's own buffer signs/keymaps so neotest manages them.

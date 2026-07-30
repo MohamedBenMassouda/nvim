@@ -10,14 +10,14 @@ return {
     ---@type blink.cmp.Config
     opts = {
       keymap = {
-        preset        = "enter",
+        preset = "enter",
         ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
 
-        ["<C-j>"]     = { "snippet_forward", "fallback" },
-        ["<C-k>"]     = { "snippet_backward", "fallback" },
+        ["<C-j>"] = { "snippet_forward", "fallback" },
+        ["<C-k>"] = { "snippet_backward", "fallback" },
 
-        ["<C-u>"]     = { "scroll_documentation_down", "fallback" },
-        ["<C-d>"]     = { "scroll_documentation_up", "fallback" },
+        ["<C-u>"] = { "scroll_documentation_down", "fallback" },
+        ["<C-d>"] = { "scroll_documentation_up", "fallback" },
       },
       appearance = {
         nerd_font_variant = "mono",
@@ -32,7 +32,7 @@ return {
           draw = {
             columns = {
               { "kind_icon" },
-              { "label",    "label_description", gap = 1 },
+              { "label", "label_description", gap = 1 },
               { "kind" },
             },
           },
@@ -48,19 +48,19 @@ return {
       local kind_colors = {
         Method = "#B180D7",
         Function = "#B180D7",
-        Constructor = "#B180D7",   -- purple
+        Constructor = "#B180D7", -- purple
         Field = "#6EA8FF",
-        Property = "#6EA8FF",      -- blue
+        Property = "#6EA8FF", -- blue
         Variable = "#8FBCE6",
         TypeParameter = "#8FBCE6", -- light blue
         Class = "#F2C55C",
-        Module = "#E5C07B",        -- gold
+        Module = "#E5C07B", -- gold
         Interface = "#5FC9BF",
-        Struct = "#4EC9B0",        -- teal
+        Struct = "#4EC9B0", -- teal
         Enum = "#DCDCAA",
-        EnumMember = "#B5CEA8",    -- yellow/green
-        Constant = "#C586C0",      -- magenta
-        Keyword = "#E06C75",       -- red
+        EnumMember = "#B5CEA8", -- yellow/green
+        Constant = "#C586C0", -- magenta
+        Keyword = "#E06C75", -- red
         Snippet = "#98C379",
         Operator = "#56B6C2",
         Text = "#ABB2BF",
