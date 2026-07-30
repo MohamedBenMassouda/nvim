@@ -19,16 +19,8 @@ return {
 		-- Check if a go project then setup
 		require("go").setup()
 
-		require("go.format").goimport() -- goimport + gofmt
-
-		-- Run gofmt + goimport on save
-		local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			pattern = "*.go",
-			callback = function()
-				require("go.format").goimport()
-			end,
-			group = format_sync_grp,
-		})
+		-- Formatting on save is conform.nvim's job (goimports + gofumpt).
+		-- go.nvim used to register its own BufWritePre goimport here, which
+		-- meant every .go save was formatted twice.
 	end,
 }

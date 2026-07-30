@@ -1,0 +1,5 @@
+# Match the editor defaults set in lua/config/options.lua (2-space, expandtab)
+# so saving a file doesn't flip its indentation to stylua's default of tabs.
+indent_type = "Spaces"
+indent_width = 2
+column_width = 120
