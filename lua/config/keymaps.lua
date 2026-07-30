@@ -101,15 +101,7 @@ vim.keymap.set("n", "gR", "<CMD>Glance references<CR>")
 vim.keymap.set("n", "gY", "<CMD>Glance type_definitions<CR>")
 vim.keymap.set("n", "gM", "<CMD>Glance implementations<CR>")
 
--- Formatting
-vim.keymap.set({ "n", "v" }, "<leader>cf", function()
-  -- vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-  require("conform").format({
-    async = false,
-    lsp_fallback = true,
-    timeout_ms = 500,
-  })
-end, { desc = "Format File" })
+-- Formatting keymaps live in the conform.nvim spec so they lazy-load with it
 
 -- TreeSitter
 vim.keymap.set("n", "[c", function()
