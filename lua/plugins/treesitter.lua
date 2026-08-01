@@ -14,6 +14,8 @@ return {
         "markdown",
         "markdown_inline",
         "javascript",
+        "typescript", -- required by neotest-vitest to discover describe/it inside .ts files
+        "tsx",
         "html",
         "c_sharp",
       })

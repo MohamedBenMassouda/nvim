@@ -11,14 +11,11 @@ return {
     -- Language adapters
     "GustavEikaas/easy-dotnet.nvim", -- C# / F# / VB (.NET) — maintained adapter (Issafalcon/neotest-dotnet broke on nvim 0.12)
     -- "nvim-neotest/neotest-jest",       -- JavaScript / TypeScript (Jest)
-    -- "marilari88/neotest-vitest",       -- JavaScript / TypeScript (Vitest)
+    "marilari88/neotest-vitest",       -- JavaScript / TypeScript (Vitest)
     -- "nvim-neotest/neotest-python",     -- Python
     -- "fredrikaverpil/neotest-golang",   -- Go
     -- "nvim-neotest/neotest-plenary",    -- Lua (plenary busted)
   },
-  -- Load on test filetypes too (not just the <leader>t keys) so discovery can
-  -- start on file open instead of waiting for the first summary/run.
-  ft = { "cs", "fsharp", "razor" },
   config = function()
     local neotest = require("neotest")
 
@@ -98,7 +95,7 @@ return {
         --   jestCommand = "npm test --",
         --   jest_test_discovery = true,
         -- }),
-        -- require("neotest-vitest"),
+        require("neotest-vitest"),
         -- require("neotest-python")({
         --   dap = { justMyCode = false },
         -- }),
