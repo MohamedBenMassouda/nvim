@@ -68,6 +68,28 @@ return {
         end,
       })
 
+      -- basedpyright: pyright fork that adds inlay hints. Its own default
+      -- typeCheckingMode is "recommended", which errors on untyped third-party
+      -- code in most real projects, so pin it back to pyright's "standard".
+      vim.lsp.config("basedpyright", {
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = "standard",
+              autoImportCompletions = true,
+              -- openFilesOnly keeps startup off the whole-repo critical path
+              diagnosticMode = "openFilesOnly",
+              inlayHints = {
+                variableTypes = true,
+                callArgumentNames = true,
+                functionReturnTypes = true,
+                genericTypes = false,
+              },
+            },
+          },
+        },
+      })
+
       require("mason").setup({
         registries = {
           "github:mason-org/mason-registry",
@@ -76,7 +98,7 @@ return {
       })
 
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls" },
+        ensure_installed = { "lua_ls", "tsc", "basedpyright" },
         -- automatic_enable is on by default: installed servers get vim.lsp.enable'd
       })
     end,

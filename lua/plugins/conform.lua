@@ -14,7 +14,7 @@ local formatters_by_ft = {
   -- ruff covers both steps in one Rust binary; isort's Python startup was
   -- costing more than the formatting itself
   python = { "ruff_organize_imports", "ruff_format" },
-  go = { "goimports", "gofumpt" },
+  go = { "goimports", "gofmt" },
   rust = { "rustfmt" },
   sh = { "shfmt" },
   bash = { "shfmt" },

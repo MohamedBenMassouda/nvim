@@ -11,7 +11,6 @@ return {
         ".dart_tool",
         ".idea",
         ".vscode",
-        ".github",
         ".gradle",
         "venv",
         "build",
@@ -26,6 +25,9 @@ return {
 
       require("fzf-lua").setup({
         file_ignore_patterns = ignore,
+        files = {
+          hidden = true,
+        },
         -- winopts = {
         -- 	preview = { default = "bat" },
         -- },
