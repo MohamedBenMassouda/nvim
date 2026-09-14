@@ -18,6 +18,7 @@ return {
         "tsx",
         "html",
         "c_sharp",
+        "python",
       })
 
       vim.api.nvim_create_autocmd("FileType", {
