@@ -42,12 +42,12 @@ return {
           },
           {
             position = "bottom",
-            size = 10,
+            size = 20,
             elements = {
               -- `console` = debuggee stdout/stderr + build output (easy-dotnet
               -- integratedTerminal renders here). `repl` = dap REPL.
-              { id = "console", size = 0.5 },
-              { id = "repl", size = 0.5 },
+              { id = "console", size = 0.75 },
+              { id = "repl", size = 0.25 },
             },
           },
         },

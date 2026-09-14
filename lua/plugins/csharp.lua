@@ -4,30 +4,46 @@ return {
     optional = true,
     opts = function()
       local dap = require("dap")
-      if not dap.adapters["netcoredbg"] then
-        dap.adapters["netcoredbg"] = {
-          type = "executable",
-          command = vim.fn.exepath("netcoredbg"),
-          args = { "--interpreter=vscode" },
-          options = { detached = false },
-        }
-      end
-      for _, lang in ipairs({ "cs", "fsharp", "vb" }) do
-        if not dap.configurations[lang] then
-          dap.configurations[lang] = {
-            {
-              type = "netcoredbg",
-              name = "Launch file",
-              request = "launch",
-              ---@diagnostic disable-next-line: redundant-parameter
-              program = function()
-                return vim.fn.input("Path to dll: ", vim.fn.getcwd() .. "/", "file")
-              end,
-              cwd = "${workspaceFolder}",
-            },
-          }
+      local netcoredbg = {
+        type = "executable",
+        command = vim.fn.exepath("netcoredbg"),
+        args = { "--interpreter=vscode" },
+        options = { detached = false },
+      }
+      dap.adapters.netcoredbg = dap.adapters.netcoredbg or netcoredbg
+      -- .vscode/launch.json configs use "coreclr" (the VSCode C# extension's
+      -- adapter name). nvim-dap has no such adapter, so those configs (e.g.
+      -- "Debug Test Harness") can't resolve one and the session dies instantly
+      -- ("starts and ends at the same time"). Alias coreclr to netcoredbg.
+      dap.adapters.coreclr = dap.adapters.coreclr or netcoredbg
+
+      -- Make easy-dotnet the default debug action for .NET buffers: <leader>ds
+      -- runs its config directly (skips the config picker); once a session is
+      -- live it just continues. The other configs (launch.json etc.) are still
+      -- reachable via <leader>dc, which keeps the picker.
+      local function debug_dotnet()
+        if dap.session() then
+          dap.continue()
+          return
+        end
+        local cfg = vim.iter(dap.configurations.cs or {}):find(function(c)
+          return c.type == "easy-dotnet"
+        end)
+        if cfg then
+          dap.run(cfg)
+        else
+          dap.continue() -- easy-dotnet not registered yet; fall back to picker
         end
       end
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "cs", "fsharp", "vb", "razor" },
+        callback = function(ev)
+          vim.keymap.set("n", "<leader>ds", debug_dotnet, {
+            buffer = ev.buf,
+            desc = "Debug: Start (easy-dotnet) / Continue",
+          })
+        end,
+      })
     end,
   },
   -- {
