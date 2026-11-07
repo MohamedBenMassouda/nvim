@@ -48,23 +48,29 @@ return {
         end,
       })
 
+      -- Pull diagnostics for the whole project, not just open buffers. This used
+      -- to run from on_attach, which meant every first file open pushed every
+      -- file in the solution/repo to the server before you could type. Cheap on
+      -- Linux, seconds on macOS, so macOS gets it on demand instead.
+      local function workspace_diagnostics(client, bufnr)
+        if client:supports_method("workspace/diagnostic", bufnr) then
+          vim.lsp.buf.workspace_diagnostics({ client_id = client.id })
+        else
+          require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
+        end
+      end
+
+      vim.keymap.set("n", "<leader>xw", function()
+        for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+          workspace_diagnostics(client, 0)
+        end
+      end, { desc = "Load workspace diagnostics" })
+
       -- Apply cmp capabilities to every server, including roslyn
       vim.lsp.config("*", {
         capabilities = require("blink.cmp").get_lsp_capabilities(),
+        on_attach = not vim.g.is_mac and workspace_diagnostics or nil,
       })
-
-      -- Whole-project diagnostics on demand: running this on every attach
-      -- scanned the entire workspace each time a server started.
-      vim.keymap.set("n", "<leader>xw", function()
-        local bufnr = vim.api.nvim_get_current_buf()
-        for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
-          if client:supports_method("workspace/diagnostic", bufnr) then
-            vim.lsp.buf.workspace_diagnostics({ client_id = client.id })
-          else
-            require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
-          end
-        end
-      end, { desc = "Workspace Diagnostics" })
 
       -- basedpyright: pyright fork that adds inlay hints. Its own default
       -- typeCheckingMode is "recommended", which errors on untyped third-party
