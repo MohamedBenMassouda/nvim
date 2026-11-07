@@ -28,9 +28,28 @@ return {
           vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
           vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
           vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+          vim.keymap.set("n", "gi", "<CMD>FzfLua lsp_implementations<CR>", opts)
           vim.keymap.set("n", "go", vim.lsp.buf.type_definition, opts)
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+          vim.keymap.set("n", "gr", "<CMD>FzfLua lsp_references<CR>", opts)
+          vim.keymap.set("n", "<leader>fS", "<CMD>FzfLua lsp_live_workspace_symbols<CR>", {
+            buffer = event.buf,
+            desc = "Workspace Symbols",
+          })
+          vim.keymap.set("n", "<leader>fo", "<CMD>FzfLua lsp_document_symbols<CR>", {
+            buffer = event.buf,
+            desc = "Document Symbols",
+          })
+
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if client and client:supports_method("textDocument/inlayHint", event.buf) then
+            vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+          end
+          if client and client:supports_method("textDocument/foldingRange", event.buf) then
+            local win = vim.fn.bufwinid(event.buf)
+            if win ~= -1 then
+              vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+            end
+          end
           vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, opts)
           vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
           -- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)

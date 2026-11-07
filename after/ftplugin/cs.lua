@@ -11,9 +11,6 @@ vim.bo.expandtab = true
 vim.bo.indentexpr = ""
 vim.bo.cindent = true
 
--- Roslyn provides inlay hints, but Neovim won't show them unless enabled
-vim.lsp.inlay_hint.enable(true, { bufnr = 0 })
-
 -- Code lens (reference counts, "run test" lenses) — refresh + run
 vim.lsp.codelens.enable(true, { bufnr = 0 })
 map("n", "<leader>cl", vim.lsp.codelens.run, vim.tbl_extend("force", opts, { desc = "Run code lens" }))

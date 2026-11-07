@@ -12,6 +12,13 @@ opt.expandtab = true
 opt.autoindent = true
 opt.smartindent = true
 
+-- Folding: treesitter by default, upgraded to LSP folding ranges on attach
+-- (see lsp.lua). Files open fully unfolded.
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldtext = "" -- keep syntax highlighting on the folded line
+opt.foldlevelstart = 99
+
 -- Line Wrapping
 opt.wrap = false
 
