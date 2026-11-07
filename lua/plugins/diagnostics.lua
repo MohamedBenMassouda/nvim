@@ -1,5 +1,4 @@
 return {
-  { "artemave/workspace-diagnostics.nvim" },
   {
     "folke/trouble.nvim",
     opts = {}, -- for default options, refer to the configuration section for custom setup.

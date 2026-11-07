@@ -1,14 +1,5 @@
 return {
-  {
-    "luckasRanarison/clear-action.nvim",
-    event = "LspAttach",
-    opts = {
-      mappings = {
-        code_action = { "<leader>ca" },
-      },
-    },
-  },
-  { "artemave/workspace-diagnostics.nvim" },
+  { "artemave/workspace-diagnostics.nvim", lazy = true },
   {
     "mason-org/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonUpdate", "MasonUninstall" },
@@ -52,21 +43,27 @@ return {
             vim.lsp.buf.format({ async = true })
           end, opts)
           vim.keymap.set("n", "<F4>", vim.lsp.buf.code_action, opts)
+          vim.keymap.set({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, opts)
         end,
       })
 
       -- Apply cmp capabilities to every server, including roslyn
       vim.lsp.config("*", {
         capabilities = require("blink.cmp").get_lsp_capabilities(),
-        on_attach = function(client, bufnr)
-          -- some clients support workspace diagnostics natively
+      })
+
+      -- Whole-project diagnostics on demand: running this on every attach
+      -- scanned the entire workspace each time a server started.
+      vim.keymap.set("n", "<leader>xw", function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
           if client:supports_method("workspace/diagnostic", bufnr) then
             vim.lsp.buf.workspace_diagnostics({ client_id = client.id })
           else
             require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
           end
-        end,
-      })
+        end
+      end, { desc = "Workspace Diagnostics" })
 
       -- basedpyright: pyright fork that adds inlay hints. Its own default
       -- typeCheckingMode is "recommended", which errors on untyped third-party

@@ -1,12 +1,60 @@
 return {
   {
-    "rcarriga/nvim-dap-ui",
+    -- Loads on first debug key (or when another plugin requires "dap"),
+    -- not at startup.
+    "mfussenegger/nvim-dap",
     dependencies = {
-      "mfussenegger/nvim-dap",
+      "rcarriga/nvim-dap-ui",
       "nvim-neotest/nvim-nio",
       "theHamsta/nvim-dap-virtual-text",
       "jay-babu/mason-nvim-dap.nvim",
     },
+    keys = function()
+      local function d(fn)
+        return function()
+          require("dap")[fn]()
+        end
+      end
+      return {
+        -- Session control
+        { "<leader>ds", d("continue"), desc = "Debug: Start/Continue" },
+        { "<leader>dc", d("continue"), desc = "Debug: Start/Continue" },
+        { "<leader>dS", d("terminate"), desc = "Debug: Stop (terminate)" },
+        { "<leader>dr", d("restart"), desc = "Debug: Restart" },
+        { "<leader>dl", d("run_last"), desc = "Debug: Run Last" },
+        -- Stepping
+        { "<leader>dp", d("pause"), desc = "Debug: Pause" },
+        { "<leader>di", d("step_into"), desc = "Debug: Step Into" },
+        { "<leader>do", d("step_over"), desc = "Debug: Step Over" },
+        { "<leader>dO", d("step_out"), desc = "Debug: Step Out" },
+        -- Breakpoints
+        { "<leader>db", d("toggle_breakpoint"), desc = "Debug: Toggle Breakpoint" },
+        { "<leader>b", d("toggle_breakpoint"), desc = "Toggle Breakpoint" },
+        {
+          "<leader>dB",
+          function()
+            require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+          end,
+          desc = "Debug: Conditional Breakpoint",
+        },
+        -- UI / inspect value under cursor or selection
+        {
+          "<leader>du",
+          function()
+            require("dapui").toggle()
+          end,
+          desc = "Debug: Toggle UI",
+        },
+        {
+          "<leader>de",
+          function()
+            require("dapui").eval()
+          end,
+          mode = { "n", "v" },
+          desc = "Debug: Eval under cursor",
+        },
+      }
+    end,
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
@@ -60,8 +108,6 @@ return {
 
       require("nvim-dap-virtual-text").setup({}) -- inline variable values while stepping
 
-      vim.keymap.set("n", "<leader>du", dapui.toggle, { desc = "Debug: Toggle UI" })
-
       -- easy-dotnet's .NET debug flow is a two-phase trampoline: the first
       -- continue aborts and reschedules via `Dotnet debug profile`, which builds
       -- then starts the real attach session. Opening the UI on `event_initialized`
@@ -103,40 +149,10 @@ return {
     end,
   },
   {
-    "mfussenegger/nvim-dap",
-    opts = {
-      automatic_setup = true,
-    },
-    config = function()
-      local dap = require("dap")
-
-      -- Session control
-      vim.keymap.set("n", "<leader>ds", dap.continue, { desc = "Debug: Start/Continue" })
-      vim.keymap.set("n", "<leader>dS", dap.terminate, { desc = "Debug: Stop (terminate)" })
-      vim.keymap.set("n", "<leader>dr", dap.restart, { desc = "Debug: Restart" })
-      vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Debug: Start/Continue" })
-      vim.keymap.set("n", "<leader>dl", dap.run_last, { desc = "Debug: Run Last" })
-      -- Stepping
-      vim.keymap.set("n", "<leader>dp", dap.pause, { desc = "Debug: Pause" })
-      vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Debug: Step Into" })
-      vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "Debug: Step Over" })
-      vim.keymap.set("n", "<leader>dO", dap.step_out, { desc = "Debug: Step Out" })
-      -- Breakpoints
-      vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
-      vim.keymap.set("n", "<leader>dB", function()
-        dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
-      end, { desc = "Debug: Conditional Breakpoint" })
-      -- Inspect value under cursor / selection
-      vim.keymap.set({ "n", "v" }, "<leader>de", function()
-        require("dapui").eval()
-      end, { desc = "Debug: Eval under cursor" })
-    end,
-  },
-  {
     "mfussenegger/nvim-dap-python",
-    after = "nvim-dap",
+    ft = "python",
     config = function()
-      require("dap-python").setup("~/.local/share/nvim/mason/packages/debugpy/")
+      require("dap-python").setup("debugpy-adapter")
     end,
   },
   {

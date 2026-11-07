@@ -18,6 +18,15 @@ return {
         "tsx",
         "html",
         "c_sharp",
+        "python",
+        "go",
+        "gomod",
+        "rust",
+        "json",
+        "yaml",
+        "toml",
+        "bash",
+        "css",
       })
 
       vim.api.nvim_create_autocmd("FileType", {

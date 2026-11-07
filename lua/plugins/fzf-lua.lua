@@ -23,7 +23,8 @@ return {
         "@girs",
       }
 
-      require("fzf-lua").setup({
+      local fzf = require("fzf-lua")
+      fzf.setup({
         file_ignore_patterns = ignore,
         files = {
           hidden = true,
@@ -32,6 +33,7 @@ return {
         -- 	preview = { default = "bat" },
         -- },
       })
+      fzf.register_ui_select() -- vim.ui.select (replaces dressing.nvim)
     end,
   },
 }

@@ -15,10 +15,5 @@ vim.bo.cindent = true
 vim.lsp.inlay_hint.enable(true, { bufnr = 0 })
 
 -- Code lens (reference counts, "run test" lenses) — refresh + run
-vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave", "TextChanged" }, {
-  buffer = 0,
-  callback = function()
-    vim.lsp.codelens.refresh({ bufnr = 0 })
-  end,
-})
+vim.lsp.codelens.enable(true, { bufnr = 0 })
 map("n", "<leader>cl", vim.lsp.codelens.run, vim.tbl_extend("force", opts, { desc = "Run code lens" }))

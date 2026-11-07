@@ -1,10 +1,7 @@
-local map = vim.keymap.set
-local opts = { noremap = true, silent = true, buffer = 0 }
-
-local function insert(opts, desc)
-  table.insert(opts, { descr = desc })
+local function map(lhs, rhs, desc)
+  vim.keymap.set("n", lhs, rhs, { silent = true, buffer = 0, desc = desc })
 end
 
-map("n", "<leader>ge", "<CMD>GoIfErr<CR>", insert(opts, "Adds error handling to the function"))
-map("n", "<leader>gt", "<CMD>GoTest<CR>", insert(opts, "Runs the test for the current package"))
-map("n", "<leader>gg", "<CMD>GoGet<CR>", insert(opts, 'Runs "go get -u"'))
+map("<leader>ge", "<CMD>GoIfErr<CR>", "Adds error handling to the function")
+map("<leader>gt", "<CMD>GoTest<CR>", "Runs the test for the current package")
+map("<leader>gG", "<CMD>GoGet<CR>", 'Runs "go get -u"')

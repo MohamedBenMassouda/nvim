@@ -8,6 +8,11 @@ return {
     messages = {
       enabled = false,
     },
+    -- snacks.notifier owns vim.notify; noice overriding it hid notifications
+    -- from Snacks.notifier.show_history / hide
+    notify = {
+      enabled = false,
+    },
     lsp = {
       progress = {
         enabled = false,

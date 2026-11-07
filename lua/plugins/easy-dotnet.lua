@@ -2,11 +2,12 @@
 -- easy-dotnet kept for its non-test features (Dotnet command: run/build/secrets/etc).
 return {
   "GustavEikaas/easy-dotnet.nvim",
-  dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+  dependencies = { "nvim-lua/plenary.nvim", "ibhagwan/fzf-lua" },
   ft = { "cs", "fsharp", "razor" },
   cmd = "Dotnet",
   config = function()
     require("easy-dotnet").setup({
+      picker = "fzf",
       config = {
         ft = "cs",
       },

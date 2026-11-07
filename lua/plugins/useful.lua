@@ -58,10 +58,9 @@ return {
   },
   {
     "NMAC427/guess-indent.nvim",
-    opts = {
-      event = "BufRead",
-      cmd = { "GuessIndent" },
-    },
+    event = "BufReadPre",
+    cmd = "GuessIndent",
+    opts = {},
   },
   {
     "folke/todo-comments.nvim",
@@ -91,6 +90,7 @@ return {
     ---@type snacks.Config
     opts = {
       bigfile = { enabled = true },
+      input = { enabled = true }, -- vim.ui.input (replaces dressing.nvim)
       dashboard = { enabled = true },
       notifier = {
         enabled = true,

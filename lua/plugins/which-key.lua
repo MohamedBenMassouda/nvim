@@ -6,10 +6,12 @@ return {
     vim.o.timeoutlen = 300
   end,
   opts = {
-    { "<leader>d", group = "Debug" },
-    { "<leader>q", group = "Session" },
-    { "<leader>r", group = "Rename/Refactor" },
-    { "<leader>t", group = "Test" },
-    { "<leader>u", group = "UI" },
+    spec = {
+      { "<leader>d", group = "Debug" },
+      { "<leader>q", group = "Session" },
+      { "<leader>r", group = "Rename/Refactor" },
+      { "<leader>t", group = "Test" },
+      { "<leader>u", group = "UI" },
+    },
   },
 }
