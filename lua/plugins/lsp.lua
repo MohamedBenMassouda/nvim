@@ -9,6 +9,7 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       "mason-org/mason-lspconfig.nvim",
+      "b0o/SchemaStore.nvim",
     },
     config = function()
       -- Diagnostics keymaps (global; not LSP-exclusive)
@@ -87,6 +88,22 @@ return {
         },
       })
 
+      -- SchemaStore: completion/validation for wrangler.jsonc, tsconfig,
+      -- package.json, GitHub Actions, docker-compose, ...
+      vim.lsp.config("jsonls", {
+        settings = {
+          json = { schemas = require("schemastore").json.schemas(), validate = { enable = true } },
+        },
+      })
+      vim.lsp.config("yamlls", {
+        settings = {
+          yaml = {
+            schemaStore = { enable = false, url = "" }, -- use SchemaStore.nvim's copy
+            schemas = require("schemastore").yaml.schemas(),
+          },
+        },
+      })
+
       require("mason").setup({
         registries = {
           "github:mason-org/mason-registry",
@@ -95,7 +112,17 @@ return {
       })
 
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "tsc", "basedpyright" },
+        ensure_installed = {
+          "lua_ls",
+          "tsc",
+          "basedpyright",
+          -- eslint/biome only attach in projects that have their config file
+          "eslint",
+          "biome",
+          "jsonls",
+          "yamlls",
+          "golangci_lint_ls",
+        },
         -- automatic_enable is on by default: installed servers get vim.lsp.enable'd
       })
     end,

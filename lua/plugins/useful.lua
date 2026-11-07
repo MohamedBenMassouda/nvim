@@ -45,9 +45,6 @@ return {
   -- 	build = "yarn i swagger-ui-watcher",
   -- },
   {
-    "tpope/vim-dadbod",
-  },
-  {
     "stevearc/oil.nvim",
     ---@module 'oil'
     ---@type oil.SetupOpts

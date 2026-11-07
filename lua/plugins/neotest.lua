@@ -13,7 +13,8 @@ return {
     -- "nvim-neotest/neotest-jest",       -- JavaScript / TypeScript (Jest)
     "marilari88/neotest-vitest", -- JavaScript / TypeScript (Vitest)
     -- "nvim-neotest/neotest-python",     -- Python
-    -- "fredrikaverpil/neotest-golang",   -- Go
+    "fredrikaverpil/neotest-golang", -- Go
+    "mrcjkb/rustaceanvim", -- Rust (ships its own adapter)
     -- "nvim-neotest/neotest-plenary",    -- Lua (plenary busted)
   },
   config = function()
@@ -99,7 +100,8 @@ return {
         -- require("neotest-python")({
         --   dap = { justMyCode = false },
         -- }),
-        -- require("neotest-golang"),
+        require("neotest-golang"),
+        require("rustaceanvim.neotest"),
         -- require("neotest-plenary"),
       },
       -- Rider-like results tree
