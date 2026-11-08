@@ -85,6 +85,35 @@ return {
         end
       end, { desc = "Load workspace diagnostics" })
 
+      -- Cap inlay hint length. Long inferred types (TS object types especially)
+      -- otherwise push the rest of the line off screen. Full type stays on K.
+      local max_hint = 30
+      local function clip(text, budget)
+        if vim.fn.strchars(text) <= budget then
+          return text, budget - vim.fn.strchars(text)
+        end
+        return vim.fn.strcharpart(text, 0, budget) .. "…", 0
+      end
+      local inlay_hint_handler = vim.lsp.handlers["textDocument/inlayHint"]
+      vim.lsp.handlers["textDocument/inlayHint"] = function(err, result, ctx, config)
+        for _, hint in ipairs(result or {}) do
+          if type(hint.label) == "string" then
+            hint.label = clip(hint.label, max_hint)
+          else -- InlayHintLabelPart[]
+            local parts, budget = {}, max_hint
+            for _, part in ipairs(hint.label) do
+              if budget == 0 then
+                break
+              end
+              part.value, budget = clip(part.value, budget)
+              parts[#parts + 1] = part
+            end
+            hint.label = parts
+          end
+        end
+        return inlay_hint_handler(err, result, ctx, config)
+      end
+
       -- Apply cmp capabilities to every server, including roslyn
       vim.lsp.config("*", {
         capabilities = require("blink.cmp").get_lsp_capabilities(),
